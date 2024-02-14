@@ -31,6 +31,8 @@ to make sure the program is functional.
      - subclasses: weapons, armor, equipment
    - Traits (abstract)
      - subclasses: skills, mutations, general
+## Class Diagram
+![CLass Diagram](Reference/ClassDiagram/ClassDiagram.png)
 
 ## Detailed Classes
  - ### Rulebook
