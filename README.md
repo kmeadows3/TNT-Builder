@@ -21,7 +21,7 @@ to make sure the program is functional.
  - Other Utility Classes
    - Inventory
      - handles inventory management for units and teams
-     - Also handles money
+     - Also handles money?
    - Reference 
      - gets the data from the files (currently csv, might be able to upgrade later)
      - creates Reference object to store the data when we need to look up information
