@@ -35,7 +35,6 @@ public class FileReader {
         }
         Equipment currentItem = new Equipment(type, cost, specialRules, traits, rarity, isRelic);
         return currentItem;
-
     }
 
 
