@@ -7,12 +7,12 @@ public abstract class InventoryItem implements Referenceable{
     private String type;
     private int cost;
     private String specialRules;
-    private List<ItemTrait> itemTraits = new ArrayList<>();
+    private List<String> itemTraits = new ArrayList<>();
     private String Rarity;
     private boolean isRelic;
 
     //Constructor
-    public InventoryItem(String type, int cost, String specialRules, List<ItemTrait> itemTraits, String rarity, boolean isRelic) {
+    public InventoryItem(String type, int cost, String specialRules, List<String> itemTraits, String rarity, boolean isRelic) {
         this.type = type;
         this.cost = cost;
         this.specialRules = specialRules;
@@ -34,7 +34,7 @@ public abstract class InventoryItem implements Referenceable{
         return specialRules;
     }
 
-    public List<ItemTrait> getItemTraits() {
+    public List<String> getItemTraits() {
         return itemTraits;
     }
 

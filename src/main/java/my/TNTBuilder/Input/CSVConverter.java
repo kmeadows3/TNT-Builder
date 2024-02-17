@@ -48,7 +48,7 @@ public class CSVConverter {
         String type = equipmentParts[1];
         int cost = Integer.parseInt(equipmentParts[2]);
         String specialRules = equipmentParts[3];
-        List<ItemTrait> traits = new ArrayList<>();  //Will need to fix to return List of Item Traits if traits exist
+        List<String> traits = new ArrayList<>();  //Will need to fix to return List of Item Traits if traits exist
         String rarity = equipmentParts[5];
         Boolean isRelic = false;
         if (!rarity.equals("N/A")){
@@ -64,7 +64,7 @@ public class CSVConverter {
         String type = armorParts[1];
         int cost = Integer.parseInt(armorParts[6]);
         String specialRules = armorParts[4];
-        List<ItemTrait> traits = new ArrayList<>();  //Will need to fix to return List of Item Traits if traits exist
+        List<String> traits = new ArrayList<>();  //Will need to fix to return List of Item Traits if traits exist
         String rarity = armorParts[10];
         boolean isRelic = !rarity.equals("N/A");
         int meleeDefenseBonus = Integer.parseInt(armorParts[2]);
@@ -82,7 +82,7 @@ public class CSVConverter {
         String type = weaponParts[1];
         int cost = Integer.parseInt(weaponParts[2]);
         String specialRules = weaponParts[9];
-        List<ItemTrait> traits = new ArrayList<>();  //Will need to fix to return List of Item Traits if traits exist
+        List<String> traits = new ArrayList<>();  //Will need to fix to return List of Item Traits if traits exist
         String rarity = weaponParts[11];
         boolean isRelic = !rarity.equals("N/A");
         int meleeRange = Integer.parseInt(weaponParts[3]);
