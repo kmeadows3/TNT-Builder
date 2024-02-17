@@ -5,17 +5,18 @@ import java.util.List;
 public class Weapon extends InventoryItem{
     private int meleeRange;
     private int rangedRange;
-    private String Strength;
+    private int strength;
     private int reliability;
     private int handsRequired;
     private String Category;
 
     //Constructor
-    public Weapon(String type, int cost, String specialRules, List<ItemTrait> itemTraits, String rarity, boolean isRelic, int meleeRange, int rangedRange, String strength, int reliability, int handsRequired, String category) {
+    public Weapon(String type, int cost, String specialRules, List<ItemTrait> itemTraits, String rarity, boolean isRelic,
+                  int meleeRange, int rangedRange, int strength, int reliability, int handsRequired, String category) {
         super(type, cost, specialRules, itemTraits, rarity, isRelic);
         this.meleeRange = meleeRange;
         this.rangedRange = rangedRange;
-        Strength = strength;
+        this.strength = strength;
         this.reliability = reliability;
         this.handsRequired = handsRequired;
         Category = category;
@@ -32,8 +33,8 @@ public class Weapon extends InventoryItem{
         return rangedRange;
     }
 
-    public String getStrength() {
-        return Strength;
+    public int getStrength() {
+        return strength;
     }
 
     public int getReliability() {
