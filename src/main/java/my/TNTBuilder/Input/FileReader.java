@@ -1,18 +1,18 @@
 package my.TNTBuilder.Input;
 
 import my.TNTBuilder.DataClasses.Equipment;
+import my.TNTBuilder.DataClasses.InventoryItem;
 import my.TNTBuilder.DataClasses.ItemTrait;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class FileReader {
 
     private File equipmentFile = new File("Reference/testCSVs/testEquipment.csv");
     private List<String> inputLines = new ArrayList<>();
+    private Map<String, InventoryItem> equipmentMap = new TreeMap<>();
 
     public void readInventoryFile() throws FileNotFoundException {
         try(Scanner reader = new Scanner(equipmentFile)){
@@ -21,6 +21,16 @@ public class FileReader {
             }
         }
     }
+
+
+    private Map<String, InventoryItem> outputConverter(List<String> fileLines){
+        for (int i = 1; i < fileLines.size(); i++){
+            Equipment newItem = stringToEquipment(fileLines.get(i));
+            equipmentMap.put(newItem.getType(), newItem);
+        }
+        return equipmentMap;
+    }
+
 
     private Equipment stringToEquipment(String string){
         String[] equipmentParts = string.split(",");
@@ -47,7 +57,7 @@ public class FileReader {
 
     private void run() throws FileNotFoundException{
         readInventoryFile();
-        stringToEquipment(inputLines.get(1));
+        outputConverter(inputLines);
         System.out.println("Done!");
     }
 
