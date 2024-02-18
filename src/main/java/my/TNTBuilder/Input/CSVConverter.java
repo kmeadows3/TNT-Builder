@@ -38,8 +38,8 @@ public class CSVConverter {
                 case "ItemTrait":
                     newItem = stringToItemTrait(fileLines.get(i));
                     break;
-                case "UnitTrait":
-                    newItem = stringToUnitTrait(fileLines.get(i));
+                case "Skill":
+                    newItem = stringToSkill(fileLines.get(i));
                     break;
                 case "Unit":
                     newItem = stringToUnit(fileLines.get(i));
@@ -111,12 +111,12 @@ public class CSVConverter {
         return new ItemTrait(name, effect);
     }
 
-    private UnitTrait stringToUnitTrait(String string){
+    private Skill stringToSkill(String string){
         String[] unitTraitParts = string.split(",");
         String name = unitTraitParts[2];
         String description = unitTraitParts[3];
         int skillset = Integer.parseInt(unitTraitParts[1]);
-        return new UnitTrait(name, description, skillset);
+        return new Skill(name, description, skillset);
     }
 
 

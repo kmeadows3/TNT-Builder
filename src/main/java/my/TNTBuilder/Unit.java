@@ -139,4 +139,8 @@ public class Unit implements Referenceable {
     public UnitInventory getInventory() {
         return inventory;
     }
+
+    public int getAdditionalStartingSkills() {
+        return additionalStartingSkills;
+    }
 }

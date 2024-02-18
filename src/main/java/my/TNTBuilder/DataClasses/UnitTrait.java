@@ -6,12 +6,10 @@ public class UnitTrait implements Referenceable{
     //Instance variables
     private String name;
     private String description;
-    private int skillset;
 
-    public UnitTrait(String name, String description, int skillset){
+    public UnitTrait(String name, String description){
         this.name = name;
         this.description = description;
-        this.skillset = skillset;
     }
 
 
@@ -20,5 +18,4 @@ public class UnitTrait implements Referenceable{
 
     public String getDescription() { return description; }
 
-    public int getSkillset() { return skillset; }
 }

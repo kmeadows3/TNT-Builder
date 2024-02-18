@@ -4,7 +4,6 @@ import my.TNTBuilder.DataClasses.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -17,7 +16,7 @@ public class Rulebook {
     private Map<String, Referenceable> armors = new TreeMap<>();
     private Map<String, Referenceable> weapons = new TreeMap<>();
     private Map<String, Referenceable> itemTraits = new TreeMap<>();
-    private Map<String, Referenceable> unitTraits = new TreeMap<>();
+    private Map<String, Referenceable> skills = new TreeMap<>();
     private Map<String, Referenceable> units = new TreeMap<>();
 
 
@@ -35,13 +34,13 @@ public class Rulebook {
         File weaponFile = new File ("Reference/testCSVs/testWeapons.csv");
         File itemTraitFile = new File ("Reference/testCSVs/testItemTraits.csv");
         File unitFile = new File ("Reference/testCSVs/testUnits.csv");
-        File unitTraitFile = new File("Reference/testCSVs/testUnitTraits.csv");
+        File skillFile = new File("Reference/testCSVs/testSkills.csv");
         //generates the maps of rules
         itemTraits = reader.stringConverter(reader.readCsvFile(itemTraitFile), "ItemTrait");
         equipment = reader.stringConverter(reader.readCsvFile(equipmentFile), "Equipment");
         armors = reader.stringConverter(reader.readCsvFile(armorFile), "Armor");
         weapons = reader.stringConverter(reader.readCsvFile(weaponFile), "Weapon");
-        unitTraits = reader.stringConverter(reader.readCsvFile(unitTraitFile), "UnitTrait");
+        skills = reader.stringConverter(reader.readCsvFile(skillFile), "Skill");
         units = reader.stringConverter(reader.readCsvFile(unitFile), "Unit");
     }
 
@@ -67,7 +66,7 @@ public class Rulebook {
     }
 
     public Map<String, Referenceable> getUnitTraits() {
-        return unitTraits;
+        return skills;
     }
 
     public Map<String, Referenceable> getUnits() {
