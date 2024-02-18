@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class InventoryItem implements Referenceable{
-    private String type;
+    private String name;
     private int cost;
     private String specialRules;
-    private List<String> itemTraits = new ArrayList<>();
+    private List<String> itemTraits;
     private String Rarity;
     private boolean isRelic;
 
     //Constructor
     public InventoryItem(String type, int cost, String specialRules, List<String> itemTraits, String rarity, boolean isRelic) {
-        this.type = type;
+        this.name = type;
         this.cost = cost;
         this.specialRules = specialRules;
         this.itemTraits = itemTraits;
@@ -22,8 +22,8 @@ public abstract class InventoryItem implements Referenceable{
     }
 
     //Getters
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
     public int getCost() {

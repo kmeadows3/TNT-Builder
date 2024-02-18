@@ -1,6 +1,6 @@
 package my.TNTBuilder.DataClasses;
 
-public class ItemTrait {
+public class ItemTrait implements Referenceable{
     private String name;
     private String effect;
 

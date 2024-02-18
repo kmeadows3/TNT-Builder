@@ -2,6 +2,7 @@ package my.TNTBuilder.Input;
 
 import my.TNTBuilder.DataClasses.*;
 import my.TNTBuilder.Exceptions.InvalidInventoryFile;
+import my.TNTBuilder.Unit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,11 +20,11 @@ public class CSVConverter {
         return inputLines;
     }
 
-    public Map<String, InventoryItem> itemConverter(List<String> fileLines, String type) throws InvalidInventoryFile{
+    public Map<String, Referenceable> stringConverter(List<String> fileLines, String type) throws InvalidInventoryFile{
 
-        Map<String, InventoryItem> items = new TreeMap<>();
+        Map<String, Referenceable> ruleItem = new TreeMap<>();
         for (int i = 1; i < fileLines.size(); i++){
-            InventoryItem newItem = null;
+            Referenceable newItem = null;
             switch (type) {
                 case "Equipment":
                     newItem = stringToEquipment(fileLines.get(i));
@@ -34,13 +35,21 @@ public class CSVConverter {
                 case "Weapon":
                     newItem = stringToWeapon(fileLines.get(i));
                     break;
+                case "ItemTrait":
+                    newItem = stringToItemTrait(fileLines.get(i));
+                    break;
+                case "UnitTrait":
+                    newItem = stringToUnitTrait(fileLines.get(i));
+                    break;
+                case "Unit":
+                    newItem = stringToUnit(fileLines.get(i));
+                    break;
                 default:
                     throw new InvalidInventoryFile("No CSV found of that type");
             }
-
-            items.put(newItem.getType(), newItem);
+            ruleItem.put(newItem.getName(), newItem);
         }
-        return items;
+        return ruleItem;
     }
 
     private Equipment stringToEquipment(String string){
@@ -48,7 +57,7 @@ public class CSVConverter {
         String type = equipmentParts[1];
         int cost = Integer.parseInt(equipmentParts[2]);
         String specialRules = equipmentParts[3];
-        List<String> traits = new ArrayList<>();  //Will need to fix to return List of Item Traits if traits exist
+        List<String> traits = traitListStringSplitter(equipmentParts[4]);
         String rarity = equipmentParts[5];
         Boolean isRelic = false;
         if (!rarity.equals("N/A")){
@@ -58,13 +67,12 @@ public class CSVConverter {
         return currentItem;
     }
 
-
     private Armor stringToArmor(String string){
         String[] armorParts = string.split(",");
         String type = armorParts[1];
         int cost = Integer.parseInt(armorParts[6]);
         String specialRules = armorParts[4];
-        List<String> traits = new ArrayList<>();  //Will need to fix to return List of Item Traits if traits exist
+        List<String> traits = traitListStringSplitter(armorParts[5]);
         String rarity = armorParts[10];
         boolean isRelic = !rarity.equals("N/A");
         int meleeDefenseBonus = Integer.parseInt(armorParts[2]);
@@ -82,7 +90,7 @@ public class CSVConverter {
         String type = weaponParts[1];
         int cost = Integer.parseInt(weaponParts[2]);
         String specialRules = weaponParts[9];
-        List<String> traits = new ArrayList<>();  //Will need to fix to return List of Item Traits if traits exist
+        List<String> traits = traitListStringSplitter(weaponParts[10]);
         String rarity = weaponParts[11];
         boolean isRelic = !rarity.equals("N/A");
         int meleeRange = Integer.parseInt(weaponParts[3]);
@@ -94,6 +102,83 @@ public class CSVConverter {
 
         return new Weapon(type, cost, specialRules, traits, rarity, isRelic, meleeRange, rangedRange, strength,
         reliability, handsRequired, category);
+    }
+
+    private ItemTrait stringToItemTrait(String string){
+        String[] itemTraitParts = string.split(",");
+        String name = itemTraitParts[1];
+        String effect = itemTraitParts[2];
+        return new ItemTrait(name, effect);
+    }
+
+    private UnitTrait stringToUnitTrait(String string){
+        String[] unitTraitParts = string.split(",");
+        String name = unitTraitParts[2];
+        String description = unitTraitParts[3];
+        int skillset = Integer.parseInt(unitTraitParts[1]);
+        return new UnitTrait(name, description, skillset);
+    }
+
+
+    private Unit stringToUnit(String string){
+        String[] unitParts = string.split(",");
+        String faction = unitParts[1];
+        String title = unitParts[2];
+        String rank = unitParts[3];
+        String type = unitParts[4];
+        int baseCost = Integer.parseInt(unitParts[5]);
+        int wounds = Integer.parseInt(unitParts[6]);
+        int defense = Integer.parseInt(unitParts[7]);
+        int mettle = Integer.parseInt(unitParts[8]);
+        int move = Integer.parseInt(unitParts[9]);
+        int melee = Integer.parseInt(unitParts[10]);
+        int ranged = Integer.parseInt(unitParts[11]);
+        int strength = Integer.parseInt(unitParts[12]);
+        String purchaseNotes = unitParts[13];
+        List<String> skills = traitListStringSplitter(unitParts[14]);
+        int startingSkills = Integer.parseInt(unitParts[15]);
+        int[] availableSkillsets = skillsetSplitter(unitParts[16]);
+        int startingExp = convertStartingExp(rank);
+
+        return new Unit(faction, title, rank, type, baseCost, purchaseNotes, wounds, defense, mettle, move, ranged,
+                melee, strength, availableSkillsets, skills, startingSkills, startingExp);
+    }
+
+
+    private List<String> traitListStringSplitter(String traits){
+        if (traits.isEmpty() || traits.equals("N/A")){
+            return new ArrayList<String>();
+        } else {
+            traits = traits.substring(1,traits.length()-1);
+            String[] traitList = traits.split("\\|");
+            return new ArrayList<>(Arrays.asList(traitList));
+        }
+    }
+
+    private int[] skillsetSplitter(String skillsetString){
+        if (skillsetString.isEmpty() || skillsetString.equals("N/A")){
+            return new int[0];
+        } else {
+            skillsetString = skillsetString.substring(1,skillsetString.length()-1);
+            String[] skillsetArray = skillsetString.split("\\|");
+            int[] skillsets = new int[skillsetArray.length];
+            for (int i = 0; i < skillsets.length; i++){
+                skillsets[i] = Integer.parseInt(skillsetArray[i]);
+            }
+            return skillsets;
+        }
+    }
+
+    private int convertStartingExp(String rank){
+        if (rank.equalsIgnoreCase("Rank and File")){
+            return 0;
+        } else if (rank.equalsIgnoreCase("Specialist")) {
+            return 21;
+        } else if (rank.equalsIgnoreCase("Elite")) {
+            return 46;
+        } else {
+            return 75;
+        }
     }
 
 }
