@@ -1,6 +1,4 @@
-package my.TNTBuilder.DataClasses;
-
-import my.TNTBuilder.Unit;
+package my.TNTBuilder.DAO.DataClasses;
 
 public class UnitTrait implements Referenceable{
     //Instance variables

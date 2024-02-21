@@ -1,14 +1,14 @@
 package my.TNTBuilder;
 
-import my.TNTBuilder.DataClasses.*;
+import my.TNTBuilder.DAO.RulebookMaker;
+import my.TNTBuilder.DAO.DataClasses.*;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.TreeMap;
 
 import my.TNTBuilder.Exceptions.TNTException;
-import my.TNTBuilder.Input.CSVConverter;
+import my.TNTBuilder.DAO.CSVConverter;
 
 public class Rulebook {
     //Maps to hold the different data types
@@ -27,21 +27,13 @@ public class Rulebook {
 
     //Make FileReader read each file and convert them
     private void ruleBookMaker() throws FileNotFoundException, TNTException {
-        //Test reference files, csv converter to work with them
-        CSVConverter reader = new CSVConverter();
-        File equipmentFile = new File("Reference/testCSVs/testEquipment.csv");
-        File armorFile = new File ("Reference/testCSVs/testArmor.csv");
-        File weaponFile = new File ("Reference/testCSVs/testWeapons.csv");
-        File itemTraitFile = new File ("Reference/testCSVs/testItemTraits.csv");
-        File unitFile = new File ("Reference/testCSVs/testUnits.csv");
-        File skillFile = new File("Reference/testCSVs/testSkills.csv");
-        //generates the maps of rules
-        itemTraits = reader.stringConverter(reader.readCsvFile(itemTraitFile), "ItemTrait");
-        equipment = reader.stringConverter(reader.readCsvFile(equipmentFile), "Equipment");
-        armors = reader.stringConverter(reader.readCsvFile(armorFile), "Armor");
-        weapons = reader.stringConverter(reader.readCsvFile(weaponFile), "Weapon");
-        skills = reader.stringConverter(reader.readCsvFile(skillFile), "Skill");
-        units = reader.stringConverter(reader.readCsvFile(unitFile), "Unit");
+        RulebookMaker reader = new CSVConverter();
+        itemTraits = reader.getItemTraits();
+        equipment = reader.getEquipment();
+        armors = reader.getArmors();
+        weapons = reader.getWeapons();
+        skills = reader.getSkills();
+        units = reader.getUnits();
     }
 
 
@@ -65,7 +57,7 @@ public class Rulebook {
         return itemTraits;
     }
 
-    public Map<String, Referenceable> getUnitTraits() {
+    public Map<String, Referenceable> getSkills() {
         return skills;
     }
 

@@ -1,6 +1,5 @@
-package my.TNTBuilder.DataClasses;
+package my.TNTBuilder.DAO.DataClasses;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class InventoryItem implements Referenceable{

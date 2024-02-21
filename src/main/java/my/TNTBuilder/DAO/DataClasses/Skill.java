@@ -1,4 +1,4 @@
-package my.TNTBuilder.DataClasses;
+package my.TNTBuilder.DAO.DataClasses;
 
 public class Skill extends UnitTrait{
     //Instance variables

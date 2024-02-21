@@ -1,15 +1,66 @@
-package my.TNTBuilder.Input;
+package my.TNTBuilder.DAO;
 
-import my.TNTBuilder.DataClasses.*;
+import my.TNTBuilder.DAO.DataClasses.*;
 import my.TNTBuilder.Exceptions.InvalidInventoryFile;
-import my.TNTBuilder.Unit;
+import my.TNTBuilder.DAO.DataClasses.Unit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class CSVConverter {
+public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTraitDao, SkillDao, UnitDao{
 
+    private File equipmentFile = new File("Reference/testCSVs/testEquipment.csv");
+    private File armorFile = new File ("Reference/testCSVs/testArmor.csv");
+    private File weaponFile = new File ("Reference/testCSVs/testWeapons.csv");
+    private File itemTraitFile = new File ("Reference/testCSVs/testItemTraits.csv");
+    private File unitFile = new File ("Reference/testCSVs/testUnits.csv");
+    private File skillFile = new File("Reference/testCSVs/testSkills.csv");
+    private Map<String, Referenceable> equipment;
+    private Map<String, Referenceable> armors;
+    private Map<String, Referenceable> weapons;
+    private Map<String, Referenceable> itemTraits;
+    private Map<String, Referenceable> skills;
+    private Map<String, Referenceable> units;
+
+
+    public CSVConverter() throws FileNotFoundException, InvalidInventoryFile{
+        itemTraits = stringConverter(readCsvFile(itemTraitFile), "ItemTrait");
+        equipment = stringConverter(readCsvFile(equipmentFile), "Equipment");
+        armors = stringConverter(readCsvFile(armorFile), "Armor");
+        weapons = stringConverter(readCsvFile(weaponFile), "Weapon");
+        skills = stringConverter(readCsvFile(skillFile), "Skill");
+        units = stringConverter(readCsvFile(unitFile), "Unit");
+    }
+
+    //Getters
+
+
+    public Map<String, Referenceable> getEquipment() {
+        return equipment;
+    }
+
+    public Map<String, Referenceable> getArmors() {
+        return armors;
+    }
+
+    public Map<String, Referenceable> getWeapons() {
+        return weapons;
+    }
+
+    public Map<String, Referenceable> getItemTraits() {
+        return itemTraits;
+    }
+
+    public Map<String, Referenceable> getSkills() {
+        return skills;
+    }
+
+    public Map<String, Referenceable> getUnits() {
+        return units;
+    }
+
+    //Methods
     public List<String> readCsvFile(File itemCSV) throws FileNotFoundException {
         List<String> inputLines = new ArrayList<>();
         try(Scanner reader = new Scanner(itemCSV)){

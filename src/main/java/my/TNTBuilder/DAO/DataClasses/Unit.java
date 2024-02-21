@@ -1,8 +1,6 @@
-package my.TNTBuilder;
+package my.TNTBuilder.DAO.DataClasses;
 
-import my.TNTBuilder.DataClasses.Referenceable;
-import my.TNTBuilder.DataClasses.UnitTrait;
-import my.TNTBuilder.Inventory.Inventory;
+import my.TNTBuilder.DAO.DataClasses.Referenceable;
 import my.TNTBuilder.Inventory.UnitInventory;
 
 import java.util.List;
