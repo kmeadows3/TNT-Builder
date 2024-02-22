@@ -5,7 +5,6 @@ public class TNTException extends Exception{
         super();
     }
 
-
     public TNTException (String message){
         super(message);
     }

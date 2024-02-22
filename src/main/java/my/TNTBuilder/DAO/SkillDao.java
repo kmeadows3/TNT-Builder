@@ -1,6 +1,6 @@
 package my.TNTBuilder.DAO;
 
-import my.TNTBuilder.DAO.DataClasses.Referenceable;
+import my.TNTBuilder.DataClasses.Referenceable;
 
 import java.util.Map;
 

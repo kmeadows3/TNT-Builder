@@ -1,4 +1,4 @@
-package my.TNTBuilder.DAO.DataClasses;
+package my.TNTBuilder.DataClasses;
 
 public interface Referenceable {
 

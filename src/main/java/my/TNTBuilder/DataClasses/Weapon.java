@@ -1,4 +1,4 @@
-package my.TNTBuilder.DAO.DataClasses;
+package my.TNTBuilder.DataClasses;
 
 import java.util.List;
 
@@ -11,6 +11,8 @@ public class Weapon extends InventoryItem{
     private String Category;
 
     //Constructor
+
+
     public Weapon(String type, int cost, String specialRules, List<String> itemTraits, String rarity, boolean isRelic,
                   int meleeRange, int rangedRange, int strength, int reliability, int handsRequired, String category) {
         super(type, cost, specialRules, itemTraits, rarity, isRelic);
@@ -22,8 +24,34 @@ public class Weapon extends InventoryItem{
         Category = category;
     }
 
+    public Weapon() {
+    }
 
     //Getters
+
+    public void setMeleeRange(int meleeRange) {
+        this.meleeRange = meleeRange;
+    }
+
+    public void setRangedRange(int rangedRange) {
+        this.rangedRange = rangedRange;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public void setReliability(int reliability) {
+        this.reliability = reliability;
+    }
+
+    public void setHandsRequired(int handsRequired) {
+        this.handsRequired = handsRequired;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
+    }
 
     public int getMeleeRange() {
         return meleeRange;

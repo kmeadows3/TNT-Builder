@@ -1,4 +1,4 @@
-package my.TNTBuilder.DAO.DataClasses;
+package my.TNTBuilder.DataClasses;
 
 public class Skill extends UnitTrait{
     //Instance variables
@@ -11,7 +11,21 @@ public class Skill extends UnitTrait{
         this.skillset = skillset;
     }
 
+    public Skill() {
+    }
+
     public int getSkillset() { return skillset; }
 
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setSkillset(int skillset) {
+        this.skillset = skillset;
+    }
 }

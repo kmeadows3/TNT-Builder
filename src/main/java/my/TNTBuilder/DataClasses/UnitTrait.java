@@ -1,4 +1,4 @@
-package my.TNTBuilder.DAO.DataClasses;
+package my.TNTBuilder.DataClasses;
 
 public class UnitTrait implements Referenceable{
     //Instance variables
@@ -10,10 +10,19 @@ public class UnitTrait implements Referenceable{
         this.description = description;
     }
 
+    public UnitTrait() {
+    }
 
     @Override
     public String getName() { return name; }
 
     public String getDescription() { return description; }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

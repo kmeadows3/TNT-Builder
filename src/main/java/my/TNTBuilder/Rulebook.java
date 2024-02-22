@@ -1,13 +1,12 @@
 package my.TNTBuilder;
 
 import my.TNTBuilder.DAO.RulebookMaker;
-import my.TNTBuilder.DAO.DataClasses.*;
+import my.TNTBuilder.DataClasses.*;
 
-import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.TreeMap;
 
-import my.TNTBuilder.Exceptions.TNTException;
+import my.TNTBuilder.Exceptions.DaoException;
 import my.TNTBuilder.DAO.CSVConverter;
 
 public class Rulebook {
@@ -21,12 +20,12 @@ public class Rulebook {
 
 
     //Constructors automatically creates the populated rulebook
-    public Rulebook() throws FileNotFoundException, TNTException { //FIX THROWS W/O CATCHES{
+    public Rulebook() throws DaoException{
         ruleBookMaker();
     }
 
     //Make FileReader read each file and convert them
-    private void ruleBookMaker() throws FileNotFoundException, TNTException {
+    private void ruleBookMaker() throws DaoException {
         RulebookMaker reader = new CSVConverter();
         itemTraits = reader.getItemTraits();
         equipment = reader.getEquipment();

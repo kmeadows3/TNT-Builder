@@ -1,4 +1,4 @@
-package my.TNTBuilder.DAO.DataClasses;
+package my.TNTBuilder.DataClasses;
 
 import java.util.List;
 
@@ -22,7 +22,31 @@ public class Armor extends InventoryItem{
         this.cost3Wounds = cost3Wounds;
     }
 
-    //Getters
+    public Armor() {
+    }
+//Getters
+
+
+    public void setMeleeDefenseBonus(int meleeDefenseBonus) {
+        this.meleeDefenseBonus = meleeDefenseBonus;
+    }
+
+    public void setRangedDefenseBonus(int rangedDefenseBonus) {
+        this.rangedDefenseBonus = rangedDefenseBonus;
+    }
+
+    public void setShield(boolean shield) {
+        isShield = shield;
+    }
+
+    public void setCost2Wounds(int cost2Wounds) {
+        this.cost2Wounds = cost2Wounds;
+    }
+
+    public void setCost3Wounds(int cost3Wounds) {
+        this.cost3Wounds = cost3Wounds;
+    }
+
     public int getMeleeDefenseBonus() {
         return meleeDefenseBonus;
     }

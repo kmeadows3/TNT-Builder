@@ -1,6 +1,5 @@
-package my.TNTBuilder.DAO.DataClasses;
+package my.TNTBuilder.DataClasses;
 
-import my.TNTBuilder.DAO.DataClasses.Referenceable;
 import my.TNTBuilder.Inventory.UnitInventory;
 
 import java.util.List;
@@ -52,16 +51,92 @@ public class Unit implements Referenceable {
         this.spentExperience = spentExperience;
     }
 
+    public Unit() {
+    }
 
-
-
-
-
-
-    //Getters
     @Override
     public String getName() {
         return title;
+    }
+
+    public void setUnitNickname(String unitNickname) {
+        this.unitNickname = unitNickname;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setFaction(String faction) {
+        this.faction = faction;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setBaseCost(int baseCost) {
+        this.baseCost = baseCost;
+    }
+
+    public void setNewPurchaseNote(String newPurchaseNote) {
+        this.newPurchaseNote = newPurchaseNote;
+    }
+
+    public void setAdditionalStartingSkills(int additionalStartingSkills) {
+        this.additionalStartingSkills = additionalStartingSkills;
+    }
+
+    public void setWounds(int wounds) {
+        this.wounds = wounds;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public void setMettle(int mettle) {
+        this.mettle = mettle;
+    }
+
+    public void setMove(int move) {
+        this.move = move;
+    }
+
+    public void setRanged(int ranged) {
+        this.ranged = ranged;
+    }
+
+    public void setMelee(int melee) {
+        this.melee = melee;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public void setSpentExperience(int spentExperience) {
+        this.spentExperience = spentExperience;
+    }
+
+    public void setUnspentExperience(int unspentExperience) {
+        this.unspentExperience = unspentExperience;
+    }
+
+    public void setAvailableSkillsets(int[] availableSkillsets) {
+        this.availableSkillsets = availableSkillsets;
+    }
+
+    public void setSkillList(List<String> skillList) {
+        this.skillList = skillList;
+    }
+
+    public void setInventory(UnitInventory inventory) {
+        this.inventory = inventory;
     }
 
     public String getUnitNickname() {

@@ -1,4 +1,4 @@
-package my.TNTBuilder.DAO.DataClasses;
+package my.TNTBuilder.DataClasses;
 
 public class ItemTrait implements Referenceable{
     private String name;
@@ -9,11 +9,22 @@ public class ItemTrait implements Referenceable{
         this.effect = effect;
     }
 
+    public ItemTrait() {
+    }
+
     public String getName() {
         return name;
     }
 
     public String getEffect() {
         return effect;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEffect(String effect) {
+        this.effect = effect;
     }
 }

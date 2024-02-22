@@ -1,4 +1,4 @@
-package my.TNTBuilder.DAO.DataClasses;
+package my.TNTBuilder.DataClasses;
 
 import java.util.List;
 
@@ -18,6 +18,9 @@ public abstract class InventoryItem implements Referenceable{
         this.itemTraits = itemTraits;
         Rarity = rarity;
         this.isRelic = isRelic;
+    }
+
+    public InventoryItem() {
     }
 
     //Getters
@@ -43,5 +46,29 @@ public abstract class InventoryItem implements Referenceable{
 
     public boolean isRelic() {
         return isRelic;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public void setSpecialRules(String specialRules) {
+        this.specialRules = specialRules;
+    }
+
+    public void setItemTraits(List<String> itemTraits) {
+        this.itemTraits = itemTraits;
+    }
+
+    public void setRarity(String rarity) {
+        Rarity = rarity;
+    }
+
+    public void setRelic(boolean relic) {
+        isRelic = relic;
     }
 }

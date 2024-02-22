@@ -1,14 +1,14 @@
 package my.TNTBuilder.DAO;
 
-import my.TNTBuilder.DAO.DataClasses.*;
-import my.TNTBuilder.Exceptions.InvalidInventoryFile;
-import my.TNTBuilder.DAO.DataClasses.Unit;
+import my.TNTBuilder.DataClasses.*;
+import my.TNTBuilder.Exceptions.DaoException;
+import my.TNTBuilder.DataClasses.Unit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTraitDao, SkillDao, UnitDao{
+public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTraitDao, SkillDao, UnitDao, RulebookMaker{
 
     private File equipmentFile = new File("Reference/testCSVs/testEquipment.csv");
     private File armorFile = new File ("Reference/testCSVs/testArmor.csv");
@@ -24,13 +24,18 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
     private Map<String, Referenceable> units;
 
 
-    public CSVConverter() throws FileNotFoundException, InvalidInventoryFile{
-        itemTraits = stringConverter(readCsvFile(itemTraitFile), "ItemTrait");
-        equipment = stringConverter(readCsvFile(equipmentFile), "Equipment");
-        armors = stringConverter(readCsvFile(armorFile), "Armor");
-        weapons = stringConverter(readCsvFile(weaponFile), "Weapon");
-        skills = stringConverter(readCsvFile(skillFile), "Skill");
-        units = stringConverter(readCsvFile(unitFile), "Unit");
+    public CSVConverter() throws DaoException{
+
+        try {
+            itemTraits = stringConverter(readCsvFile(itemTraitFile), "ItemTrait");
+            equipment = stringConverter(readCsvFile(equipmentFile), "Equipment");
+            armors = stringConverter(readCsvFile(armorFile), "Armor");
+            weapons = stringConverter(readCsvFile(weaponFile), "Weapon");
+            skills = stringConverter(readCsvFile(skillFile), "Skill");
+            units = stringConverter(readCsvFile(unitFile), "Unit");
+        } catch (FileNotFoundException e){
+            throw new DaoException("Inventory File Not Found");
+        }
     }
 
     //Getters
@@ -71,7 +76,7 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
         return inputLines;
     }
 
-    public Map<String, Referenceable> stringConverter(List<String> fileLines, String type) throws InvalidInventoryFile{
+    private Map<String, Referenceable> stringConverter(List<String> fileLines, String type) {
 
         Map<String, Referenceable> ruleItem = new TreeMap<>();
         for (int i = 1; i < fileLines.size(); i++){
@@ -96,7 +101,7 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
                     newItem = stringToUnit(fileLines.get(i));
                     break;
                 default:
-                    throw new InvalidInventoryFile("No CSV found of that type");
+                    break;
             }
             ruleItem.put(newItem.getName(), newItem);
         }
