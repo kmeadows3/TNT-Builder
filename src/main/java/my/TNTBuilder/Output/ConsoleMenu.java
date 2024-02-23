@@ -1,6 +1,8 @@
 package my.TNTBuilder.Output;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import my.TNTBuilder.Exceptions.TNTException;
+import my.TNTBuilder.Rulebook;
 import my.TNTBuilder.Team;
 
 import java.util.Scanner;
@@ -41,6 +43,32 @@ public class ConsoleMenu {
         System.out.print("Name your warband: ");
         String name = console.nextLine();
         return new TeamInputHelper(name, faction, money);
+    }
+
+
+    public String editTeamMenu(){
+        System.out.println();
+
+        System.out.println("(1) Edit Unit");
+        System.out.println("(2) Add New Unit");
+        System.out.println("(3) Manage Inventory");
+        System.out.println("(4) Finish Editing Team");
+        System.out.println();
+        System.out.print("Make Selection: ");
+
+        return console.nextLine();
+    }
+
+    public String[] getNewUnitInformationFromUser(){
+        System.out.println();
+        String[] userInput = new String[2];
+        System.out.print("Name Your Unit: ");
+        userInput[0] = console.nextLine();
+        System.out.print("New Unit Title: "); //TODO validate titles
+        userInput[1] = console.nextLine();
+
+
+        return userInput;
     }
 
 

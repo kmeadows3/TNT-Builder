@@ -2,6 +2,7 @@ package my.TNTBuilder;
 
 import my.TNTBuilder.DataClasses.Unit;
 import my.TNTBuilder.Exceptions.DaoException;
+import my.TNTBuilder.Exceptions.TNTException;
 
 public class Builder {
     private Team currentTeam;
@@ -21,6 +22,29 @@ public class Builder {
         return currentTeam;
     }
 
+    public void newUnit(String name, String unitType) throws TNTException{
+        try {
+            Unit unitToClone = (Unit)rulebook.getUnits().get(unitType);
+            currentUnit = (Unit)unitToClone.clone();
+        } catch (CloneNotSupportedException e ){
+            throw new TNTException("Cannot make a new unit", e);
+        }
+        currentUnit.setUnitNickname(name);
+        //TODO make user fill out starting skills
+        currentTeam.addUnit(currentUnit);
+    };
+
+    public boolean validateUnitTitle (String inputTitle){
+        //TODO this does nothing - CURRENTLY WORKING HERE!
+        return false;
+    }
+
+
+
+
+
+
+
 
     public Team getCurrentTeam() {
         return currentTeam;
@@ -36,5 +60,9 @@ public class Builder {
 
     public void setCurrentUnit(Unit currentUnit) {
         this.currentUnit = currentUnit;
+    }
+
+    public Rulebook getRulebook() {
+        return rulebook;
     }
 }

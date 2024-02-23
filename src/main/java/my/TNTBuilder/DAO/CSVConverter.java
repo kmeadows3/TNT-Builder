@@ -27,12 +27,12 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
     public CSVConverter() throws DaoException{
 
         try {
-            itemTraits = stringConverter(readCsvFile(itemTraitFile), "ItemTrait");
-            equipment = stringConverter(readCsvFile(equipmentFile), "Equipment");
-            armors = stringConverter(readCsvFile(armorFile), "Armor");
-            weapons = stringConverter(readCsvFile(weaponFile), "Weapon");
-            skills = stringConverter(readCsvFile(skillFile), "Skill");
-            units = stringConverter(readCsvFile(unitFile), "Unit");
+            itemTraits = stringArrayToReferenceMap(readCsvFile(itemTraitFile), "ItemTrait");
+            equipment = stringArrayToReferenceMap(readCsvFile(equipmentFile), "Equipment");
+            armors = stringArrayToReferenceMap(readCsvFile(armorFile), "Armor");
+            weapons = stringArrayToReferenceMap(readCsvFile(weaponFile), "Weapon");
+            skills = stringArrayToReferenceMap(readCsvFile(skillFile), "Skill");
+            units = stringArrayToReferenceMap(readCsvFile(unitFile), "Unit");
         } catch (FileNotFoundException e){
             throw new DaoException("Inventory File Not Found");
         }
@@ -76,7 +76,7 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
         return inputLines;
     }
 
-    private Map<String, Referenceable> stringConverter(List<String> fileLines, String type) {
+    private Map<String, Referenceable> stringArrayToReferenceMap(List<String> fileLines, String type) {
 
         Map<String, Referenceable> ruleItem = new TreeMap<>();
         for (int i = 1; i < fileLines.size(); i++){

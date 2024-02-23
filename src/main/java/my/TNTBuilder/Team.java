@@ -27,14 +27,14 @@ public class Team {
         this.inventory = inventory;
     }
 
+    public void addUnit(Unit unit){
+        unitMap.put(unit.getUnitNickname(), unit);
+    }
 
 
 
 
     //Derived instance variables
-
-
-
 
     public int getBSCost(){
         return 0;    //NEEDS METHOD

@@ -4,7 +4,7 @@ import my.TNTBuilder.Inventory.UnitInventory;
 
 import java.util.List;
 
-public class Unit implements Referenceable {
+public class Unit implements Referenceable, Cloneable{
     private int id;
     private String unitNickname; //not called name so it's not confusing with getName
     private String title;
@@ -15,10 +15,8 @@ public class Unit implements Referenceable {
     private String newPurchaseNote;
     private int additionalStartingSkills;
     private int wounds;
-    private int startingWounds;
     private int defense;
     private int mettle;
-    private int startingMettle;
     private int move;
     private int ranged;
     private int melee;
@@ -43,10 +41,8 @@ public class Unit implements Referenceable {
         this.baseCost = baseCost;
         this.newPurchaseNote = newPurchaseNote;
         this.wounds = wounds;
-        this.startingWounds = wounds;
         this.defense = defense;
         this.mettle = mettle;
-        this.startingMettle = mettle;
         this.move = move;
         this.ranged = ranged;
         this.melee = melee;
@@ -60,6 +56,15 @@ public class Unit implements Referenceable {
     public Unit() {
     }
 
+    //Methods
+
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    //Getters and Setters
     public int getId() {
         return id;
     }

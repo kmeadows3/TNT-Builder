@@ -23,6 +23,7 @@ public class ApplicationCLI {
                 String selection = menu.mainMenu();
                 if (selection.equals("1")) {
                     createTeam();
+                    editTeamMenu();
                 } else if (selection.equals("2")) {
                     throw new TNTException("This functionality is not implemented");
                 } else if (selection.equals("3")) {
@@ -40,15 +41,51 @@ public class ApplicationCLI {
     }
 
 
+    private void editTeamMenu(){
+        while (true) {
+            menu.displayTeam(builder.getCurrentTeam());
+            try {
+                String userSelection = menu.editTeamMenu();
+                if (userSelection.equals("1")){
+                    throw new TNTException("This functionality is not implemented");
+                } else if (userSelection.equals("2")){
+                    createUnit();
+                } else if (userSelection.equals("3")){
+                    throw new TNTException("This functionality is not implemented");
+                } else if (userSelection.equals("4")){
+                    // TODO implement save functionality
+                    return;
+                } else {
+                    throw new TNTException("Please enter a valid selection");
+                }
+            } catch (TNTException e) {
+                menu.printErrorMessage(e);
+            }
+        }
+    }
+
+
     private void createTeam(){
+
         try {
             TeamInputHelper teamData = menu.initializeNewTeam();
             builder.newTeam(teamData.getName(), teamData.getFaction(), teamData.getMoney());
         } catch (TNTException e){
             menu.printErrorMessage(e);
         }
-        menu.displayTeam(builder.getCurrentTeam());
     }
+
+    private void createUnit(){
+        try {
+            String[] userInput = menu.getNewUnitInformationFromUser();
+            //TODO new builder method to validate data
+            builder.newUnit(userInput[0], userInput[1]);
+        } catch (TNTException e) {
+            menu.printErrorMessage(e);
+        }
+
+    }
+
 
 
 
