@@ -15,8 +15,10 @@ public class Unit implements Referenceable {
     private String newPurchaseNote;
     private int additionalStartingSkills;
     private int wounds;
+    private int startingWounds;
     private int defense;
     private int mettle;
+    private int startingMettle;
     private int move;
     private int ranged;
     private int melee;
@@ -41,8 +43,10 @@ public class Unit implements Referenceable {
         this.baseCost = baseCost;
         this.newPurchaseNote = newPurchaseNote;
         this.wounds = wounds;
+        this.startingWounds = wounds;
         this.defense = defense;
         this.mettle = mettle;
+        this.startingMettle = mettle;
         this.move = move;
         this.ranged = ranged;
         this.melee = melee;
