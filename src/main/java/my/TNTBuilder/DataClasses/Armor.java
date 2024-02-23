@@ -12,9 +12,9 @@ public class Armor extends InventoryItem{
 
     //Constructor
 
-    public Armor(String type, int cost, String specialRules, List<String> itemTraits, String rarity, boolean isRelic,
+    public Armor(int id, String type, int cost, String specialRules, List<String> itemTraits, String rarity, boolean isRelic,
                  int meleeDefenseBonus, int rangedDefenseBonus, boolean isShield, int cost2Wounds, int cost3Wounds) {
-        super(type, cost, specialRules, itemTraits, rarity, isRelic);
+        super(id, type, cost, specialRules, itemTraits, rarity, isRelic);
         this.meleeDefenseBonus = meleeDefenseBonus;
         this.rangedDefenseBonus = rangedDefenseBonus;
         this.isShield = isShield;

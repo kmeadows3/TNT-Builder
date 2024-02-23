@@ -3,6 +3,7 @@ package my.TNTBuilder.DataClasses;
 import java.util.List;
 
 public abstract class InventoryItem implements Referenceable{
+    private int id;
     private String name;
     private int cost;
     private String specialRules;
@@ -11,7 +12,8 @@ public abstract class InventoryItem implements Referenceable{
     private boolean isRelic;
 
     //Constructor
-    public InventoryItem(String type, int cost, String specialRules, List<String> itemTraits, String rarity, boolean isRelic) {
+    public InventoryItem(int id, String type, int cost, String specialRules, List<String> itemTraits, String rarity, boolean isRelic) {
+        this.id = id;
         this.name = type;
         this.cost = cost;
         this.specialRules = specialRules;
@@ -24,6 +26,16 @@ public abstract class InventoryItem implements Referenceable{
     }
 
     //Getters
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

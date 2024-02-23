@@ -110,6 +110,7 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
 
     private Equipment stringToEquipment(String string){
         String[] equipmentParts = string.split(",");
+        int id = Integer.parseInt(equipmentParts[0]);
         String type = equipmentParts[1];
         int cost = Integer.parseInt(equipmentParts[2]);
         String specialRules = equipmentParts[3];
@@ -119,12 +120,13 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
         if (!rarity.equals("N/A")){
             isRelic = true;
         }
-        Equipment currentItem = new Equipment(type, cost, specialRules, traits, rarity, isRelic);
+        Equipment currentItem = new Equipment(id, type, cost, specialRules, traits, rarity, isRelic);
         return currentItem;
     }
 
     private Armor stringToArmor(String string){
         String[] armorParts = string.split(",");
+        int id = Integer.parseInt(armorParts[0]);
         String type = armorParts[1];
         int cost = Integer.parseInt(armorParts[6]);
         String specialRules = armorParts[4];
@@ -137,12 +139,13 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
         int cost3Wounds = Integer.parseInt(armorParts[8]);
         boolean isShield = armorParts[9].equals("TRUE");
 
-        return new Armor(type, cost, specialRules, traits, rarity, isRelic, meleeDefenseBonus,
+        return new Armor(id, type, cost, specialRules, traits, rarity, isRelic, meleeDefenseBonus,
                 rangedDefenseBonus, isShield, cost2Wounds, cost3Wounds);
     }
 
     private Weapon stringToWeapon(String string){
         String[] weaponParts = string.split(",");
+        int id = Integer.parseInt(weaponParts[0]);
         String type = weaponParts[1];
         int cost = Integer.parseInt(weaponParts[2]);
         String specialRules = weaponParts[9];
@@ -156,28 +159,31 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
         int handsRequired = Integer.parseInt(weaponParts[7]);
         String category = weaponParts[8];
 
-        return new Weapon(type, cost, specialRules, traits, rarity, isRelic, meleeRange, rangedRange, strength,
+        return new Weapon(id, type, cost, specialRules, traits, rarity, isRelic, meleeRange, rangedRange, strength,
         reliability, handsRequired, category);
     }
 
     private ItemTrait stringToItemTrait(String string){
         String[] itemTraitParts = string.split(",");
+        int id = Integer.parseInt(itemTraitParts[0]);
         String name = itemTraitParts[1];
         String effect = itemTraitParts[2];
-        return new ItemTrait(name, effect);
+        return new ItemTrait(id, name, effect);
     }
 
     private Skill stringToSkill(String string){
         String[] unitTraitParts = string.split(",");
+        int id = Integer.parseInt(unitTraitParts[0]);
         String name = unitTraitParts[2];
         String description = unitTraitParts[3];
         int skillset = Integer.parseInt(unitTraitParts[1]);
-        return new Skill(name, description, skillset);
+        return new Skill(id, name, description, skillset);
     }
 
 
     private Unit stringToUnit(String string){
         String[] unitParts = string.split(",");
+        int id = Integer.parseInt(unitParts[0]);
         String faction = unitParts[1];
         String title = unitParts[2];
         String rank = unitParts[3];
@@ -196,7 +202,7 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
         int[] availableSkillsets = skillsetSplitter(unitParts[16]);
         int startingExp = convertStartingExp(rank);
 
-        return new Unit(faction, title, rank, type, baseCost, purchaseNotes, wounds, defense, mettle, move, ranged,
+        return new Unit(id, faction, title, rank, type, baseCost, purchaseNotes, wounds, defense, mettle, move, ranged,
                 melee, strength, availableSkillsets, skills, startingSkills, startingExp);
     }
 

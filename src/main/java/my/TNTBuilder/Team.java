@@ -2,23 +2,24 @@ package my.TNTBuilder;
 
 import my.TNTBuilder.DataClasses.Unit;
 import my.TNTBuilder.Inventory.Inventory;
-import my.TNTBuilder.Inventory.TeamInventory;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Team {
+    private int id;
     private String name;
     private String faction;
     private int money;
     private Map <String, Unit> unitMap = new LinkedHashMap<>();
-    private Inventory inventory = new TeamInventory();
+    private Inventory inventory = new Inventory() {
+    };
 
     //Constructors
     public Team (){
     }
 
-    public Team (String name, String faction, int money, Map<String, Unit> unitMap, TeamInventory inventory){
+    public Team (int id, String name, String faction, int money, Map<String, Unit> unitMap, Inventory inventory){
+        this.id = id;
         this.name = name;
         this.faction = faction;
         this.money = money;
@@ -31,6 +32,10 @@ public class Team {
 
 
     //Derived instance variables
+
+
+
+
     public int getBSCost(){
         return 0;    //NEEDS METHOD
     }
@@ -44,6 +49,14 @@ public class Team {
     }
 
     //Getters and Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

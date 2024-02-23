@@ -6,8 +6,8 @@ public class Skill extends UnitTrait{
     private String description;
     private int skillset;
 
-    public Skill(String name, String description, int skillset){
-        super(name,description);
+    public Skill(int id, String name, String description, int skillset){
+        super(id, name,description);
         this.skillset = skillset;
     }
 

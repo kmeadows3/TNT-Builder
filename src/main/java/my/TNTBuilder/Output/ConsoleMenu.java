@@ -53,6 +53,7 @@ public class ConsoleMenu {
             padding2 += 1;
         }
 
+        System.out.println();
         System.out.println("---------------------------------------------------------------------------");
         System.out.printf("| %" + padding + "s%S%"+ (padding2) + "s |%n", "", team.getName(), "");
         System.out.println("--------------------------------------------------------------------------");
@@ -71,8 +72,6 @@ public class ConsoleMenu {
         System.out.printf("| %-71s |%n", "INVENTORY");
         System.out.printf("| %-71s |%n", "- Admittedly, I can't print the inventory right now.");
         System.out.println("---------------------------------------------------------------------------");
-
-        System.out.println();
 
     }
 

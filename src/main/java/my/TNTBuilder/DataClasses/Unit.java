@@ -5,6 +5,7 @@ import my.TNTBuilder.Inventory.UnitInventory;
 import java.util.List;
 
 public class Unit implements Referenceable {
+    private int id;
     private String unitNickname; //not called name so it's not confusing with getName
     private String title;
     private String faction;
@@ -29,9 +30,10 @@ public class Unit implements Referenceable {
 
     //constructor
 
-    public Unit(String faction, String title, String rank, String type, int baseCost, String newPurchaseNote,
+    public Unit(int id, String faction, String title, String rank, String type, int baseCost, String newPurchaseNote,
                 int wounds, int defense, int mettle, int move, int ranged, int melee, int strength,
                 int[] availableSkillsets, List<String> skillList, int additionalStartingSkills, int spentExperience) {
+        this.id = id;
         this.faction = faction;
         this.title = title;
         this.rank = rank;
@@ -52,6 +54,14 @@ public class Unit implements Referenceable {
     }
 
     public Unit() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

@@ -13,9 +13,9 @@ public class Weapon extends InventoryItem{
     //Constructor
 
 
-    public Weapon(String type, int cost, String specialRules, List<String> itemTraits, String rarity, boolean isRelic,
+    public Weapon(int id, String type, int cost, String specialRules, List<String> itemTraits, String rarity, boolean isRelic,
                   int meleeRange, int rangedRange, int strength, int reliability, int handsRequired, String category) {
-        super(type, cost, specialRules, itemTraits, rarity, isRelic);
+        super(id, type, cost, specialRules, itemTraits, rarity, isRelic);
         this.meleeRange = meleeRange;
         this.rangedRange = rangedRange;
         this.strength = strength;
