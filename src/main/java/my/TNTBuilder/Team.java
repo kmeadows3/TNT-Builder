@@ -1,6 +1,7 @@
 package my.TNTBuilder;
 
 import my.TNTBuilder.DataClasses.Unit;
+import my.TNTBuilder.Exceptions.TNTException;
 import my.TNTBuilder.Inventory.Inventory;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,8 +32,13 @@ public class Team {
         unitMap.put(unit.getUnitNickname(), unit);
     }
 
-
-
+    public void spendMoney(int amountToSpend) throws TNTException{
+        if (money >= amountToSpend){
+            money -= amountToSpend;
+        } else {
+            throw new TNTException("You do not have enough money for that");
+        }
+    }
 
     //Derived instance variables
 
@@ -47,6 +53,18 @@ public class Team {
     public int getUpkeep(){
         return 0; // NEEDS METHOD
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //Getters and Setters
     public int getId() {

@@ -2,7 +2,10 @@ package my.TNTBuilder.DataClasses;
 
 import my.TNTBuilder.Inventory.UnitInventory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Unit implements Referenceable, Cloneable{
     private int id;
@@ -60,8 +63,14 @@ public class Unit implements Referenceable, Cloneable{
 
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public Unit clone() throws CloneNotSupportedException {
+        Unit clonedUnit = (Unit)super.clone();
+        clonedUnit.inventory = new UnitInventory();
+        List<String> newSkillList = new ArrayList<>();
+        newSkillList.addAll(skillList);
+        clonedUnit.skillList = newSkillList;
+        return clonedUnit;
+
     }
 
     //Getters and Setters
@@ -234,5 +243,27 @@ public class Unit implements Referenceable, Cloneable{
 
     public int getAdditionalStartingSkills() {
         return additionalStartingSkills;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Unit unit = (Unit) o;
+        return id == unit.id && baseCost == unit.baseCost && additionalStartingSkills == unit.additionalStartingSkills
+                && wounds == unit.wounds && defense == unit.defense && mettle == unit.mettle && move == unit.move
+                && ranged == unit.ranged && melee == unit.melee && strength == unit.strength
+                && spentExperience == unit.spentExperience && unspentExperience == unit.unspentExperience
+                && Objects.equals(title, unit.title) && Objects.equals(faction, unit.faction)
+                && Objects.equals(rank, unit.rank)
+                && Objects.equals(type, unit.type) && Objects.equals(newPurchaseNote, unit.newPurchaseNote)
+                && Arrays.equals(availableSkillsets, unit.availableSkillsets);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, unitNickname, title, faction, rank, type, baseCost, newPurchaseNote, additionalStartingSkills, wounds, defense, mettle, move, ranged, melee, strength, spentExperience, unspentExperience, skillList, inventory);
+        result = 31 * result + Arrays.hashCode(availableSkillsets);
+        return result;
     }
 }

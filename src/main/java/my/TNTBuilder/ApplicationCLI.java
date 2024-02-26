@@ -78,7 +78,6 @@ public class ApplicationCLI {
     private void createUnit(){
         try {
             String[] userInput = menu.getNewUnitInformationFromUser();
-            //TODO new builder method to validate data
             builder.newUnit(userInput[0], userInput[1]);
         } catch (TNTException e) {
             menu.printErrorMessage(e);

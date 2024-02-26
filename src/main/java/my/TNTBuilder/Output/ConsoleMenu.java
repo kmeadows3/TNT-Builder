@@ -67,7 +67,6 @@ public class ConsoleMenu {
         System.out.print("New Unit Title: "); //TODO validate titles
         userInput[1] = console.nextLine();
 
-
         return userInput;
     }
 
