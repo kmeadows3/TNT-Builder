@@ -82,9 +82,9 @@ public class ConsoleMenu {
 
 
 
-    public NewUnitInput getNewUnitInformationFromUser(List<Unit> unitOptions) throws TNTException{
+    public NewUnitInputHelper getNewUnitInformationFromUser(List<Unit> unitOptions) throws TNTException{
         System.out.println();
-        NewUnitInput newUnit = new NewUnitInput();
+        NewUnitInputHelper newUnit = new NewUnitInputHelper();
 
         selectUnitFromUnitOptions(unitOptions, newUnit);
 
@@ -94,7 +94,7 @@ public class ConsoleMenu {
         return newUnit;
     }
 
-    private void selectUnitFromUnitOptions(List<Unit> unitOptions, NewUnitInput newUnit) throws TNTException {
+    private void selectUnitFromUnitOptions(List<Unit> unitOptions, NewUnitInputHelper newUnit) throws TNTException {
         for (int i = 0; i < unitOptions.size(); i++){
             System.out.println("(" + (i + 1) + ") " + unitOptions.get(i).getName() + " - Cost: "
                     + unitOptions.get(i).getBaseCost() + " BS");

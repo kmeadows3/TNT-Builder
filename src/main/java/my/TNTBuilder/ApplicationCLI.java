@@ -1,10 +1,9 @@
 package my.TNTBuilder;
 
 import my.TNTBuilder.Exceptions.DaoException;
-import my.TNTBuilder.Exceptions.InvalidUnitPurchaseException;
 import my.TNTBuilder.Exceptions.TNTException;
 import my.TNTBuilder.Output.ConsoleMenu;
-import my.TNTBuilder.Output.NewUnitInput;
+import my.TNTBuilder.Output.NewUnitInputHelper;
 import my.TNTBuilder.Output.TeamInputHelper;
 
 public class ApplicationCLI {
@@ -79,7 +78,7 @@ public class ApplicationCLI {
     private void createUnit(){
         try {
             String faction = builder.getCurrentTeam().getFaction();
-            NewUnitInput userInput = menu.getNewUnitInformationFromUser(builder.getRulebook().getUnitOptions(
+            NewUnitInputHelper userInput = menu.getNewUnitInformationFromUser(builder.getRulebook().getUnitOptions(
                     faction));
             builder.newUnit(userInput.getName(), userInput.getUnit());
         }  catch (NumberFormatException e) {

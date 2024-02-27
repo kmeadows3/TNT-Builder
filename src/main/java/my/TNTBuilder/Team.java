@@ -1,6 +1,7 @@
 package my.TNTBuilder;
 
 import my.TNTBuilder.Exceptions.FailedPurchaseException;
+import my.TNTBuilder.Models.Skill;
 import my.TNTBuilder.Models.Unit;
 import my.TNTBuilder.Exceptions.TNTException;
 import my.TNTBuilder.Inventory.Inventory;
@@ -60,8 +61,22 @@ public class Team {
 
     public int getUpkeep(){
         int upkeep = 0;
+        for (Unit unit : unitList){
+            String rank = unit.getRank();
+            boolean isScavenger = unit.getSkillList().contains("Scavenger");
 
-        return 0; // TODO: ADD METHOD
+            if (isScavenger) {
+                upkeep += 0;
+            } else if (rank.equals("Leader")) {
+                upkeep += 3;
+            } else if (rank.equals("Elite") || rank.equals("Specialist")){
+                upkeep += 2;
+            } else if (rank.equals("Rank and File")) {
+                upkeep += 1;
+            }
+        }
+        // TODO: Deal with relics in inventory
+        return upkeep;
     }
 
 

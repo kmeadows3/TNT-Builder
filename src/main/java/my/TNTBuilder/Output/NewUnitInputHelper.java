@@ -2,7 +2,7 @@ package my.TNTBuilder.Output;
 
 import my.TNTBuilder.Models.Unit;
 
-public class NewUnitInput {
+public class NewUnitInputHelper {
     String name;
     Unit unit;
 
