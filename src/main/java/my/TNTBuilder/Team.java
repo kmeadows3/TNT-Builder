@@ -1,5 +1,6 @@
 package my.TNTBuilder;
 
+import my.TNTBuilder.Exceptions.FailedPurchaseException;
 import my.TNTBuilder.Models.Unit;
 import my.TNTBuilder.Exceptions.TNTException;
 import my.TNTBuilder.Inventory.Inventory;
@@ -15,8 +16,7 @@ public class Team {
     private String faction;
     private int money;
     private List<Unit> unitList = new ArrayList<>();
-    private Inventory inventory = new Inventory() {
-    };
+    private Inventory inventory = new Inventory();
 
     //Constructors
     public Team (){
@@ -35,11 +35,11 @@ public class Team {
         unitList.add(unit);
     }
 
-    public void spendMoney(int amountToSpend) throws TNTException{
+    public void spendMoney(int amountToSpend) throws FailedPurchaseException{
         if (money >= amountToSpend){
             money -= amountToSpend;
         } else {
-            throw new TNTException("You do not have enough money for that");
+            throw new FailedPurchaseException("You do not have enough money for that");
         }
     }
 
@@ -51,15 +51,15 @@ public class Team {
             bsCost += unit.getBSCost();
         }
         //TODO: add inventory BS cost later
-        return bsCost;    //NEEDS METHOD
+        return bsCost;
     }
 
     public int relicCount(){
-        return 0; // NEEDS METHOD
+        return 0; // TODO: ADD METHOD
     }
 
     public int getUpkeep(){
-        return 0; // NEEDS METHOD
+        return 0; // TODO: ADD METHOD
     }
 
 

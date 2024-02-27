@@ -1,6 +1,7 @@
 package my.TNTBuilder;
 
 import my.TNTBuilder.Exceptions.DaoException;
+import my.TNTBuilder.Exceptions.InvalidUnitPurchaseException;
 import my.TNTBuilder.Exceptions.TNTException;
 import my.TNTBuilder.Output.ConsoleMenu;
 import my.TNTBuilder.Output.NewUnitInput;
@@ -67,7 +68,6 @@ public class ApplicationCLI {
 
 
     private void createTeam(){
-
         try {
             TeamInputHelper teamData = menu.initializeNewTeam(builder.getRulebook().getTeamOptions());
             builder.newTeam(teamData.getName(), teamData.getFaction(), teamData.getMoney());
@@ -76,14 +76,16 @@ public class ApplicationCLI {
         }
     }
 
-    private void createUnit() throws TNTException{
+    private void createUnit(){
         try {
+            String faction = builder.getCurrentTeam().getFaction();
             NewUnitInput userInput = menu.getNewUnitInformationFromUser(builder.getRulebook().getUnitOptions(
-                    builder.getCurrentTeam().getFaction()));
+                    faction));
             builder.newUnit(userInput.getName(), userInput.getUnit());
         }  catch (NumberFormatException e) {
-            throw new TNTException("Please enter a valid number", e);
-        }catch (TNTException e) {
+            TNTException ex = new TNTException("Please enter a valid number", e);
+            menu.printErrorMessage(ex);
+        } catch (TNTException e) {
             menu.printErrorMessage(e);
         }
     }

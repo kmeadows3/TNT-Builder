@@ -1,6 +1,7 @@
 package my.TNTBuilder;
 
 import my.TNTBuilder.Exceptions.TNTException;
+import my.TNTBuilder.Inventory.Inventory;
 import my.TNTBuilder.Models.Unit;
 import org.junit.*;
 
@@ -23,7 +24,7 @@ public class BuilderTests {
         Assert.assertEquals(name, testTeam.getName());
         Assert.assertEquals(faction, testTeam.getFaction());
         Assert.assertEquals(money, testTeam.getMoney());
-        Assert.assertEquals(0, testTeam.getUnitMap().size());
+        Assert.assertEquals(0, testTeam.getUnitList().size());
         //TODO deal with inventory when that's implemented
     }
 
@@ -45,6 +46,23 @@ public class BuilderTests {
         Team team = builder.newTeam("Team Name", "Caravanners", 500);
         builder.newUnit(name, unit);
         Assert.assertEquals(builder.getRulebook().getUnits().get(1), builder.getCurrentUnit());
+        Assert.assertFalse(unit.getInventory() == builder.getCurrentUnit().getInventory());
+        Assert.assertFalse(unit.getSkillList() == builder.getCurrentUnit().getSkillList());
+    }
+
+    @Test
+    public void newUnit_fails_if_not_enough_money() throws TNTException{
+        String name = "Unit Name";
+        Unit unit = (Unit) builder.getRulebook().getUnits().get(1);
+        Team team = builder.newTeam("Team Name", "Caravanners", 30);
+
+        try {
+            builder.newUnit(name, unit);
+            Assert.fail();
+        } catch (TNTException e){
+            
+        }
+
     }
 
 }
