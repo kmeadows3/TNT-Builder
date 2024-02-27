@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface UnitDao {
+    public Map<Integer, Unit> getUnits();
 
     public List<String> getTeamOptions();
-    public Map<Integer, Referenceable> getUnits();
+
     public List<Unit> getUnitOptions(String faction);
 }

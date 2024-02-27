@@ -59,6 +59,8 @@ public class Team {
     }
 
     public int getUpkeep(){
+        int upkeep = 0;
+
         return 0; // TODO: ADD METHOD
     }
 

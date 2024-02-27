@@ -1,10 +1,10 @@
 package my.TNTBuilder.DAO;
 
-import my.TNTBuilder.Models.Referenceable;
+import my.TNTBuilder.Models.Armor;
 
 import java.util.Map;
 
 public interface ArmorDao {
 
-    public Map<Integer, Referenceable> getArmors();
+    public Map<Integer, Armor> getArmors();
 }

@@ -1,7 +1,5 @@
 package my.TNTBuilder;
 
-import my.TNTBuilder.DAO.FileRulebookDao;
-import my.TNTBuilder.Exceptions.InvalidUnitPurchaseException;
 import my.TNTBuilder.Models.Unit;
 import my.TNTBuilder.Exceptions.DaoException;
 import my.TNTBuilder.Exceptions.TNTException;
@@ -9,17 +7,16 @@ import my.TNTBuilder.Exceptions.TNTException;
 public class Builder {
     private Team currentTeam;
     private Unit currentUnit;
-    private FileRulebookDao rulebook;
+    private Rulebook rulebook;
 
     public Builder() throws DaoException{
-        rulebook = new FileRulebookDao();
+        rulebook = new Rulebook();
     }
 
     public Team newTeam(String name, String faction, int money) throws TNTException{
         if (money <= 0){
             throw new TNTException("You must start with a positive amount of money");
         }
-        //TODO validate factions
         currentTeam = new Team();
         currentTeam.setName(name);
         currentTeam.setFaction(faction);
@@ -65,7 +62,7 @@ public class Builder {
         this.currentUnit = currentUnit;
     }
 
-    public FileRulebookDao getRulebook() {
+    public Rulebook getRulebook() {
         return rulebook;
     }
 }
