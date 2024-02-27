@@ -1,10 +1,14 @@
 package my.TNTBuilder.DAO;
 
-import my.TNTBuilder.DataClasses.Referenceable;
+import my.TNTBuilder.Models.Referenceable;
+import my.TNTBuilder.Models.Unit;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UnitDao {
 
-    public Map<String, Referenceable> getUnits();
+    public List<String> getTeamOptions();
+    public Map<Integer, Referenceable> getUnits();
+    public List<Unit> getUnitOptions(String faction);
 }

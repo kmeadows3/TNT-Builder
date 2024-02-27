@@ -1,16 +1,18 @@
 package my.TNTBuilder;
 
-import my.TNTBuilder.DataClasses.Unit;
+import my.TNTBuilder.DAO.FileRulebookDao;
+import my.TNTBuilder.Exceptions.InvalidUnitPurchaseException;
+import my.TNTBuilder.Models.Unit;
 import my.TNTBuilder.Exceptions.DaoException;
 import my.TNTBuilder.Exceptions.TNTException;
 
 public class Builder {
     private Team currentTeam;
     private Unit currentUnit;
-    private Rulebook rulebook;
+    private FileRulebookDao rulebook;
 
     public Builder() throws DaoException{
-        rulebook = new Rulebook();
+        rulebook = new FileRulebookDao();
     }
 
     public Team newTeam(String name, String faction, int money) throws TNTException{
@@ -26,14 +28,10 @@ public class Builder {
         return currentTeam;
     }
 
-    public void newUnit(String name, String unitType) throws TNTException{
+    public void newUnit(String name, Unit unit) throws TNTException{
         try {
-            if (!validateNewUnit(unitType)){
-                throw new TNTException("You cannot buy that unit");
-            }
-            Unit unitToClone = (Unit)rulebook.getUnits().get(unitType);
-            currentTeam.spendMoney(unitToClone.getBaseCost());
-            currentUnit = (Unit)unitToClone.clone();
+            currentTeam.spendMoney(unit.getBaseCost());
+            currentUnit = unit.clone();
         } catch (CloneNotSupportedException e ){
             throw new TNTException("Cannot make a new unit", e);
         }
@@ -43,15 +41,6 @@ public class Builder {
 
     };
 
-    public boolean validateNewUnit(String inputTitle) throws TNTException{
-        if (!rulebook.getUnits().containsKey(inputTitle)){
-            return false;
-        }
-
-        Unit unit = (Unit)rulebook.getUnits().get(inputTitle);
-
-        return unit.getFaction().equals(currentTeam.getFaction());
-    }
 
 
 
@@ -76,7 +65,7 @@ public class Builder {
         this.currentUnit = currentUnit;
     }
 
-    public Rulebook getRulebook() {
+    public FileRulebookDao getRulebook() {
         return rulebook;
     }
 }

@@ -4,7 +4,7 @@ import my.TNTBuilder.Models.Referenceable;
 
 import java.util.Map;
 
-public interface SkillDao {
+public interface SkillsetDao {
 
-    public Map<Integer, Referenceable> getSkills();
+    public Map<Integer, Referenceable> getSkillsets();
 }

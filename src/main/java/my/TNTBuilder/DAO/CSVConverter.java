@@ -1,14 +1,14 @@
 package my.TNTBuilder.DAO;
 
-import my.TNTBuilder.DataClasses.*;
+import my.TNTBuilder.Models.*;
 import my.TNTBuilder.Exceptions.DaoException;
-import my.TNTBuilder.DataClasses.Unit;
+import my.TNTBuilder.Models.Unit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTraitDao, SkillDao, UnitDao, RulebookMaker{
+public class CSVConverter {
 
     private File equipmentFile = new File("Reference/testCSVs/testEquipment.csv");
     private File armorFile = new File ("Reference/testCSVs/testArmor.csv");
@@ -16,12 +16,14 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
     private File itemTraitFile = new File ("Reference/testCSVs/testItemTraits.csv");
     private File unitFile = new File ("Reference/testCSVs/testUnits.csv");
     private File skillFile = new File("Reference/testCSVs/testSkills.csv");
-    private Map<String, Referenceable> equipment;
-    private Map<String, Referenceable> armors;
-    private Map<String, Referenceable> weapons;
-    private Map<String, Referenceable> itemTraits;
-    private Map<String, Referenceable> skills;
-    private Map<String, Referenceable> units;
+    private File skillsetFile = new File("Reference/testCSVs/testSkillsets.csv");
+    private Map<Integer, Referenceable> equipment;
+    private Map<Integer, Referenceable> armors;
+    private Map<Integer, Referenceable> weapons;
+    private Map<Integer, Referenceable> itemTraits;
+    private Map<Integer, Referenceable> skills;
+    private Map<Integer, Referenceable> units;
+    private Map<Integer, Referenceable> skillsets;
 
 
     public CSVConverter() throws DaoException{
@@ -33,6 +35,7 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
             weapons = stringArrayToReferenceMap(readCsvFile(weaponFile), "Weapon");
             skills = stringArrayToReferenceMap(readCsvFile(skillFile), "Skill");
             units = stringArrayToReferenceMap(readCsvFile(unitFile), "Unit");
+            skillsets = stringArrayToReferenceMap(readCsvFile(skillsetFile), "Skillset");
         } catch (FileNotFoundException e){
             throw new DaoException("Inventory File Not Found");
         }
@@ -41,28 +44,32 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
     //Getters
 
 
-    public Map<String, Referenceable> getEquipment() {
+    public Map<Integer, Referenceable> getEquipment() {
         return equipment;
     }
 
-    public Map<String, Referenceable> getArmors() {
+    public Map<Integer, Referenceable> getArmors() {
         return armors;
     }
 
-    public Map<String, Referenceable> getWeapons() {
+    public Map<Integer, Referenceable> getWeapons() {
         return weapons;
     }
 
-    public Map<String, Referenceable> getItemTraits() {
+    public Map<Integer, Referenceable> getItemTraits() {
         return itemTraits;
     }
 
-    public Map<String, Referenceable> getSkills() {
+    public Map<Integer, Referenceable> getSkills() {
         return skills;
     }
 
-    public Map<String, Referenceable> getUnits() {
+    public Map<Integer, Referenceable> getUnits() {
         return units;
+    }
+
+    public Map<Integer, Referenceable> getSkillsets() {
+        return skillsets;
     }
 
     //Methods
@@ -76,9 +83,9 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
         return inputLines;
     }
 
-    private Map<String, Referenceable> stringArrayToReferenceMap(List<String> fileLines, String type) {
+    private Map<Integer, Referenceable> stringArrayToReferenceMap(List<String> fileLines, String type) {
 
-        Map<String, Referenceable> ruleItem = new TreeMap<>();
+        Map<Integer, Referenceable> ruleItem = new TreeMap<>();
         for (int i = 1; i < fileLines.size(); i++){
             Referenceable newItem = null;
             switch (type) {
@@ -100,12 +107,27 @@ public class CSVConverter implements ArmorDao, WeaponDao, EquipmentDao, ItemTrai
                 case "Unit":
                     newItem = stringToUnit(fileLines.get(i));
                     break;
+                case "Skillset":
+                    newItem = stringToSkillset(fileLines.get(i));
+                    break;
                 default:
                     break;
             }
-            ruleItem.put(newItem.getName(), newItem);
+            ruleItem.put(newItem.getId(), newItem);
         }
         return ruleItem;
+    }
+
+    private Referenceable stringToSkillset(String string) {
+        String[] equipmentParts = string.split(",");
+        int id = Integer.parseInt(equipmentParts[0]);
+        String name = equipmentParts[1];
+        String category = equipmentParts[2];
+        Skillset currentItem = new Skillset();
+        currentItem.setName(name);
+        currentItem.setCategory(category);
+        currentItem.setId(id);
+        return currentItem;
     }
 
     private Equipment stringToEquipment(String string){

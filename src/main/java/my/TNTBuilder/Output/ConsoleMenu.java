@@ -1,10 +1,10 @@
 package my.TNTBuilder.Output;
 
-import jdk.swing.interop.SwingInterOpUtils;
 import my.TNTBuilder.Exceptions.TNTException;
-import my.TNTBuilder.Rulebook;
+import my.TNTBuilder.Models.Unit;
 import my.TNTBuilder.Team;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleMenu {
@@ -29,23 +29,6 @@ public class ConsoleMenu {
         return console.nextLine();
     }
 
-    public TeamInputHelper initializeNewTeam() throws TNTException{
-        System.out.println();
-        System.out.print("Starting Barter Scrip: ");
-        int money = 0;
-        try {
-            money = Integer.parseInt(console.nextLine());
-        } catch (NumberFormatException e){
-            throw new TNTException("Enter money as an integer.", e);
-        }
-        System.out.print("New warband's faction: ");
-        String faction = console.nextLine();
-        System.out.print("Name your warband: ");
-        String name = console.nextLine();
-        return new TeamInputHelper(name, faction, money);
-    }
-
-
     public String editTeamMenu(){
         System.out.println();
 
@@ -59,15 +42,68 @@ public class ConsoleMenu {
         return console.nextLine();
     }
 
-    public String[] getNewUnitInformationFromUser(){
-        System.out.println();
-        String[] userInput = new String[2];
-        System.out.print("Name Your Unit: ");
-        userInput[0] = console.nextLine();
-        System.out.print("New Unit Title: "); //TODO validate titles
-        userInput[1] = console.nextLine();
+    public TeamInputHelper initializeNewTeam(List<String> teamOptions) throws TNTException{
+        int money = getStartingMoney();
+        String faction = getFaction(teamOptions);
 
-        return userInput;
+        System.out.print("Name your warband: ");
+        String name = console.nextLine();
+        return new TeamInputHelper(name, faction, money);
+    }
+
+    private String getFaction(List<String> teamOptions) throws TNTException {
+        System.out.println("Faction Options:");
+        for (int i = 0; i < teamOptions.size(); i++){
+            System.out.println("("+ (i + 1) + ") " + teamOptions.get(i));
+        }
+        System.out.println();
+        System.out.print("Please select your faction: ");
+        String faction = null;
+        try {
+            int teamNumber = Integer.parseInt(console.nextLine());
+            faction = teamOptions.get(teamNumber - 1);
+        } catch (NumberFormatException e){
+            throw new TNTException("Enter team selection as an integer.", e);
+        }
+        return faction;
+    }
+
+    private int getStartingMoney() throws TNTException {
+        System.out.println();
+        System.out.print("Starting Barter Scrip: ");
+        int money = 0;
+        try {
+            money = Integer.parseInt(console.nextLine());
+        } catch (NumberFormatException e){
+            throw new TNTException("Enter money as an integer.", e);
+        }
+        System.out.println();
+        return money;
+    }
+
+
+
+
+    public NewUnitInput getNewUnitInformationFromUser(List<Unit> unitOptions) throws TNTException{
+        System.out.println();
+        NewUnitInput newUnit = new NewUnitInput();
+
+        for (int i = 0; i < unitOptions.size(); i++){
+            System.out.println("(" + (i + 1) + ") " + unitOptions.get(i).getName() + " - Cost: "
+                    + unitOptions.get(i).getBaseCost() + " BS");
+        }
+        System.out.print("Please select your unit class: ");
+                try {
+            int unitChoice = Integer.parseInt(console.nextLine());
+            newUnit.setUnit(unitOptions.get(unitChoice - 1));
+        } catch (NumberFormatException e){
+            throw new TNTException("Enter unit selection as an integer.", e);
+        }
+
+        System.out.print("Name Your Unit: ");
+        newUnit.setName(console.nextLine());
+
+        return newUnit;
     }
 
 
@@ -89,12 +125,7 @@ public class ConsoleMenu {
         System.out.printf("| %-22s |   %4d    |          %5d          |    %2d    |%n",
                 team.getFaction(), team.getBSCost(), team.getMoney(), team.getUpkeep());
         System.out.println("---------------------------------------------------------------------------");
-        System.out.printf("| %-71s |%n", "MEMBERS");
-        if (team.getUnitMap().isEmpty()){
-            System.out.printf("| %-71s |%n", "- How sad, this warband has no members :(");
-        } else {
-            //at some point loop through the member map
-        }
+        printTeamBox(team, boxWidth);
         System.out.println("---------------------------------------------------------------------------");
         System.out.printf("| %-71s |%n", "INVENTORY");
         System.out.printf("| %-71s |%n", "- Admittedly, I can't print the inventory right now.");
@@ -102,6 +133,21 @@ public class ConsoleMenu {
 
     }
 
+    private static void printTeamBox(Team team, int boxWidth) {
+        System.out.printf("| %-71s |%n", "MEMBERS");
+        if (team.getUnitList().isEmpty()){
+            System.out.printf("| %-71s |%n", "- How sad, this warband has no members :(");
+        } else {
+            for (int i = 0; i < team.getUnitList().size(); i++){
+                Unit unit = team.getUnitList().get(i);
+                String unitInfo = "(" + (i + 1) + ") " + unit.getUnitNickname() + " - " + unit.getName() + " - " +
+                        unit.getBSCost() + " BS";
+                int paddingAmount = boxWidth - unitInfo.length();
+                System.out.printf("| %s%" + paddingAmount + "s |%n", unitInfo, "");
+            }
+
+        }
+    }
 
 
     public void goodbyeMessage(){

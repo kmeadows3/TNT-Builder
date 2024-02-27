@@ -1,9 +1,12 @@
 package my.TNTBuilder;
 
-import my.TNTBuilder.DataClasses.Unit;
+import my.TNTBuilder.Models.Unit;
 import my.TNTBuilder.Exceptions.TNTException;
 import my.TNTBuilder.Inventory.Inventory;
+
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Team {
@@ -11,7 +14,7 @@ public class Team {
     private String name;
     private String faction;
     private int money;
-    private Map <String, Unit> unitMap = new LinkedHashMap<>();
+    private List<Unit> unitList = new ArrayList<>();
     private Inventory inventory = new Inventory() {
     };
 
@@ -19,17 +22,17 @@ public class Team {
     public Team (){
     }
 
-    public Team (int id, String name, String faction, int money, Map<String, Unit> unitMap, Inventory inventory){
+    public Team (int id, String name, String faction, int money, List<Unit> unitList, Inventory inventory){
         this.id = id;
         this.name = name;
         this.faction = faction;
         this.money = money;
-        this.unitMap = unitMap;
+        this.unitList = unitList;
         this.inventory = inventory;
     }
 
     public void addUnit(Unit unit){
-        unitMap.put(unit.getUnitNickname(), unit);
+        unitList.add(unit);
     }
 
     public void spendMoney(int amountToSpend) throws TNTException{
@@ -43,7 +46,12 @@ public class Team {
     //Derived instance variables
 
     public int getBSCost(){
-        return 0;    //NEEDS METHOD
+        int bsCost = 0;
+        for (Unit unit : unitList){
+            bsCost += unit.getBSCost();
+        }
+        //TODO: add inventory BS cost later
+        return bsCost;    //NEEDS METHOD
     }
 
     public int relicCount(){
@@ -99,12 +107,12 @@ public class Team {
         this.money = money;
     }
 
-    public Map<String, Unit> getUnitMap() {
-        return unitMap;
+    public List<Unit> getUnitList() {
+        return unitList;
     }
 
-    public void setUnitMap(Map<String, Unit> unitMap) {
-        this.unitMap = unitMap;
+    public void setUnitMap(List<Unit> unitList) {
+        this.unitList = unitList;
     }
 
     public Inventory getInventory() {

@@ -3,6 +3,7 @@ package my.TNTBuilder;
 import my.TNTBuilder.Exceptions.DaoException;
 import my.TNTBuilder.Exceptions.TNTException;
 import my.TNTBuilder.Output.ConsoleMenu;
+import my.TNTBuilder.Output.NewUnitInput;
 import my.TNTBuilder.Output.TeamInputHelper;
 
 public class ApplicationCLI {
@@ -68,21 +69,23 @@ public class ApplicationCLI {
     private void createTeam(){
 
         try {
-            TeamInputHelper teamData = menu.initializeNewTeam();
+            TeamInputHelper teamData = menu.initializeNewTeam(builder.getRulebook().getTeamOptions());
             builder.newTeam(teamData.getName(), teamData.getFaction(), teamData.getMoney());
         } catch (TNTException e){
             menu.printErrorMessage(e);
         }
     }
 
-    private void createUnit(){
+    private void createUnit() throws TNTException{
         try {
-            String[] userInput = menu.getNewUnitInformationFromUser();
-            builder.newUnit(userInput[0], userInput[1]);
-        } catch (TNTException e) {
+            NewUnitInput userInput = menu.getNewUnitInformationFromUser(builder.getRulebook().getUnitOptions(
+                    builder.getCurrentTeam().getFaction()));
+            builder.newUnit(userInput.getName(), userInput.getUnit());
+        }  catch (NumberFormatException e) {
+            throw new TNTException("Please enter a valid number", e);
+        }catch (TNTException e) {
             menu.printErrorMessage(e);
         }
-
     }
 
 

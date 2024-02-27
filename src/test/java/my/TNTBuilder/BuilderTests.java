@@ -1,7 +1,7 @@
 package my.TNTBuilder;
 
-import my.TNTBuilder.DataClasses.Unit;
 import my.TNTBuilder.Exceptions.TNTException;
+import my.TNTBuilder.Models.Unit;
 import org.junit.*;
 
 public class BuilderTests {
@@ -41,10 +41,10 @@ public class BuilderTests {
     @Test
     public void newUnit_clones_unit_successfully() throws TNTException{
         String name = "Unit Name";
-        String title = "Trade Master";
+        Unit unit = (Unit) builder.getRulebook().getUnits().get(1);
         Team team = builder.newTeam("Team Name", "Caravanners", 500);
-        builder.newUnit(name, title);
-        Assert.assertEquals(builder.getRulebook().getUnits().get(title), builder.getCurrentUnit());
+        builder.newUnit(name, unit);
+        Assert.assertEquals(builder.getRulebook().getUnits().get(1), builder.getCurrentUnit());
     }
 
 }

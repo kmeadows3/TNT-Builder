@@ -1,4 +1,4 @@
-package my.TNTBuilder.DataClasses;
+package my.TNTBuilder.Models;
 
 import my.TNTBuilder.Inventory.UnitInventory;
 
@@ -72,6 +72,13 @@ public class Unit implements Referenceable, Cloneable{
         return clonedUnit;
 
     }
+
+    public int getBSCost() {
+        int bsCost = baseCost;
+        //TODO calculate this after inventory is implemented
+        return bsCost;
+    }
+
 
     //Getters and Setters
     public int getId() {
