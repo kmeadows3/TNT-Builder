@@ -1,6 +1,7 @@
 package my.TNTBuilder;
 
 import my.TNTBuilder.Exceptions.FailedPurchaseException;
+import my.TNTBuilder.Exceptions.InvalidUnitPurchaseException;
 import my.TNTBuilder.Models.Skill;
 import my.TNTBuilder.Models.Unit;
 import my.TNTBuilder.Exceptions.TNTException;
@@ -32,12 +33,19 @@ public class Team {
         this.inventory = inventory;
     }
 
-    public void addUnit(Unit unit){
-        unitList.add(unit);
+    public void addUnit(Unit unit) throws InvalidUnitPurchaseException{
+        if (unit.getFaction().equals(faction)){
+            unitList.add(unit);
+        } else {
+            throw new InvalidUnitPurchaseException("This unit cannot be added to this team.");
+        }
+
     }
 
     public void spendMoney(int amountToSpend) throws FailedPurchaseException{
-        if (money >= amountToSpend){
+        if (amountToSpend <= 0 ){
+            throw new FailedPurchaseException("Money spent must be positive.");
+        } else if (money >= amountToSpend){
             money -= amountToSpend;
         } else {
             throw new FailedPurchaseException("You do not have enough money for that");

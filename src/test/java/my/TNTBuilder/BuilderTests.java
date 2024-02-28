@@ -42,7 +42,7 @@ public class BuilderTests {
     @Test
     public void newUnit_clones_unit_successfully() throws TNTException{
         String name = "Unit Name";
-        Unit unit = (Unit) builder.getRulebook().getUnits().get(1);
+        Unit unit = builder.getRulebook().getUnits().get(1);
         Team team = builder.newTeam("Team Name", "Caravanners", 500);
         builder.newUnit(name, unit);
         Assert.assertEquals(builder.getRulebook().getUnits().get(1), builder.getCurrentUnit());
