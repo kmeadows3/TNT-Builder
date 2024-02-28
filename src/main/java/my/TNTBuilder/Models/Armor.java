@@ -1,6 +1,7 @@
 package my.TNTBuilder.Models;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Armor extends InventoryItem{
     private int meleeDefenseBonus;
@@ -65,5 +66,20 @@ public class Armor extends InventoryItem{
 
     public int getCost3Wounds() {
         return cost3Wounds;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Armor armor = (Armor) o;
+        return meleeDefenseBonus == armor.meleeDefenseBonus && rangedDefenseBonus == armor.rangedDefenseBonus &&
+                isShield == armor.isShield && cost2Wounds == armor.cost2Wounds && cost3Wounds == armor.cost3Wounds;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(meleeDefenseBonus, rangedDefenseBonus, isShield, cost2Wounds, cost3Wounds);
     }
 }

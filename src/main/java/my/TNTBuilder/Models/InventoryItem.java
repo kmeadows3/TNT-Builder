@@ -1,6 +1,7 @@
 package my.TNTBuilder.Models;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class InventoryItem implements Referenceable{
     private int id;
@@ -82,5 +83,20 @@ public abstract class InventoryItem implements Referenceable{
 
     public void setRelic(boolean relic) {
         isRelic = relic;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InventoryItem that = (InventoryItem) o;
+        return id == that.id && cost == that.cost && isRelic == that.isRelic && name.equals(that.name) &&
+                specialRules.equals(that.specialRules) && Objects.equals(itemTraits, that.itemTraits) &&
+                Rarity.equals(that.Rarity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, cost, specialRules, itemTraits, Rarity, isRelic);
     }
 }

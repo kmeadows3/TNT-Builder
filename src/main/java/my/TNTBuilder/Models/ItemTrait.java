@@ -1,5 +1,7 @@
 package my.TNTBuilder.Models;
 
+import java.util.Objects;
+
 public class ItemTrait implements Referenceable{
     private int id;
     private String name;
@@ -36,5 +38,18 @@ public class ItemTrait implements Referenceable{
 
     public void setEffect(String effect) {
         this.effect = effect;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemTrait itemTrait = (ItemTrait) o;
+        return id == itemTrait.id && name.equals(itemTrait.name) && effect.equals(itemTrait.effect);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, effect);
     }
 }

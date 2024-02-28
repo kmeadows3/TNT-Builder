@@ -1,5 +1,7 @@
 package my.TNTBuilder.Models;
 
+import java.util.Objects;
+
 public class UnitTrait implements Referenceable{
     //Instance variables
     private String name;
@@ -35,5 +37,18 @@ public class UnitTrait implements Referenceable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UnitTrait unitTrait = (UnitTrait) o;
+        return id == unitTrait.id && name.equals(unitTrait.name) && description.equals(unitTrait.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, id);
     }
 }

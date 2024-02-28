@@ -1,5 +1,7 @@
 package my.TNTBuilder.Models;
 
+import java.util.Objects;
+
 public class Skillset implements Referenceable {
 
     private int id;
@@ -28,5 +30,18 @@ public class Skillset implements Referenceable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Skillset skillset = (Skillset) o;
+        return id == skillset.id && name.equals(skillset.name) && category.equals(skillset.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, category);
     }
 }

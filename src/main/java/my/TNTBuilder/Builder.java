@@ -7,10 +7,10 @@ import my.TNTBuilder.Exceptions.TNTException;
 public class Builder {
     private Team currentTeam;
     private Unit currentUnit;
-    private Rulebook rulebook;
+    private Reference reference;
 
     public Builder() throws DaoException{
-        rulebook = new Rulebook();
+        reference = new Reference();
     }
 
     public Team newTeam(String name, String faction, int money) throws TNTException{
@@ -25,7 +25,7 @@ public class Builder {
         return currentTeam;
     }
 
-    public void newUnit(String name, Unit unit) throws TNTException{
+    public Unit newUnit(String name, Unit unit) throws TNTException{
         try {
             currentTeam.spendMoney(unit.getBaseCost());
             currentUnit = unit.clone();
@@ -35,7 +35,7 @@ public class Builder {
         currentUnit.setUnitNickname(name);
         currentTeam.addUnit(currentUnit);
         //TODO make user fill out starting skills
-
+        return currentUnit;
     };
 
 
@@ -62,7 +62,7 @@ public class Builder {
         this.currentUnit = currentUnit;
     }
 
-    public Rulebook getRulebook() {
-        return rulebook;
+    public Reference getRulebook() {
+        return reference;
     }
 }

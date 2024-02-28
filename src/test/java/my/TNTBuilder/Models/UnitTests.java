@@ -1,5 +1,4 @@
 package my.TNTBuilder.Models;
-import my.TNTBuilder.Rulebook;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -40,9 +39,23 @@ public class UnitTests {
     }
 
     @Test
-    public void clone_unit_clones_unit_with_empty_inventory_and_copied_skilllist(){
-        Rulebook rulebook = new Rulebook();
-        //TODO WORKING HERE
+    public void clone_unit_clones_unit_with_empty_inventory_and_copied_skillList() throws CloneNotSupportedException{
+        unit.getSkillList().add("Skill");
+        Unit unitClone = unit.clone();
 
+        Assert.assertEquals(unit, unitClone);
+        Assert.assertFalse(unit.getInventory() == unitClone.getInventory());
+        Assert.assertFalse(unit.getSkillList() == unitClone.getSkillList());
+        Assert.assertTrue(unitClone.getSkillList().containsAll(unitClone.getSkillList()));
+        //TODO modify after inventory implemented
     }
+
+    @Test
+    public void getBsCost_returns_correct_bs_cost_no_inventory(){
+        Assert.assertEquals(50, unit.getBSCost());
+    }
+
+    //TODO implement tests for BS with inventory when inventory implemented
+
+
 }

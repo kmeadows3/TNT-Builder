@@ -70,4 +70,5 @@ public class FileSkillsetDao implements SkillsetDao {
     public Map<Integer, Skillset> getSkillsets() {
         return skillsets;
     }
+
 }

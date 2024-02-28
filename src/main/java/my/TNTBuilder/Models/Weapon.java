@@ -1,6 +1,7 @@
 package my.TNTBuilder.Models;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Weapon extends InventoryItem{
     private int meleeRange;
@@ -75,5 +76,20 @@ public class Weapon extends InventoryItem{
 
     public String getCategory() {
         return Category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Weapon weapon = (Weapon) o;
+        return meleeRange == weapon.meleeRange && rangedRange == weapon.rangedRange && strength == weapon.strength &&
+                reliability == weapon.reliability && handsRequired == weapon.handsRequired && Category.equals(weapon.Category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), meleeRange, rangedRange, strength, reliability, handsRequired, Category);
     }
 }

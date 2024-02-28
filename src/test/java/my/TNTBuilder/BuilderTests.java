@@ -8,8 +8,6 @@ import org.junit.*;
 public class BuilderTests {
     Builder builder = null;
 
-    Team testTeam = null;
-
     @Before
     public void setBuilder() throws TNTException {
         builder = new Builder();
@@ -40,14 +38,33 @@ public class BuilderTests {
     }
 
     @Test
+    public void newUnit_makes_currentUnit_equal_new_unit () throws TNTException{
+        String name = "Unit Name";
+        Unit unit = builder.getRulebook().getUnits().get(1);
+        Team team = builder.newTeam("Team Name", "Caravanners", 500);
+        builder.newUnit(name, unit);
+        Assert.assertEquals(unit, builder.getCurrentUnit());
+    }
+
+    @Test
     public void newUnit_clones_unit_successfully() throws TNTException{
         String name = "Unit Name";
         Unit unit = builder.getRulebook().getUnits().get(1);
         Team team = builder.newTeam("Team Name", "Caravanners", 500);
         builder.newUnit(name, unit);
         Assert.assertEquals(builder.getRulebook().getUnits().get(1), builder.getCurrentUnit());
-        Assert.assertFalse(unit.getInventory() == builder.getCurrentUnit().getInventory());
-        Assert.assertFalse(unit.getSkillList() == builder.getCurrentUnit().getSkillList());
+        Assert.assertNotSame(unit.getInventory(), builder.getCurrentUnit().getInventory());
+        Assert.assertNotSame(unit.getSkillList(), builder.getCurrentUnit().getSkillList());
+    }
+
+    @Test
+    public void newUnit_added_unit_to_team_unitList() throws TNTException{
+        String name = "Unit Name";
+        Unit unit = builder.getRulebook().getUnits().get(1);
+        Team team = builder.newTeam("Team Name", "Caravanners", 500);
+        builder.newUnit(name, unit);
+        Assert.assertEquals(1, builder.getCurrentTeam().getUnitList().size());
+        Assert.assertTrue(builder.getCurrentTeam().getUnitList().contains(builder.getCurrentUnit()));
     }
 
     @Test

@@ -9,4 +9,6 @@ public class Equipment extends InventoryItem{
 
     public Equipment() {
     }
+
+
 }
