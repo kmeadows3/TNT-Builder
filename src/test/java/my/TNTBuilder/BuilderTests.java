@@ -1,9 +1,13 @@
 package my.TNTBuilder;
 
+import my.TNTBuilder.Exceptions.DaoException;
+import my.TNTBuilder.Exceptions.FailedMoneyTransaction;
+import my.TNTBuilder.Exceptions.InvalidUnitPurchaseException;
 import my.TNTBuilder.Exceptions.TNTException;
-import my.TNTBuilder.Inventory.Inventory;
 import my.TNTBuilder.Models.Unit;
 import org.junit.*;
+
+import java.util.ArrayList;
 
 public class BuilderTests {
     Builder builder = null;
@@ -40,7 +44,7 @@ public class BuilderTests {
     @Test
     public void newUnit_makes_currentUnit_equal_new_unit () throws TNTException{
         String name = "Unit Name";
-        Unit unit = builder.getRulebook().getUnits().get(1);
+        Unit unit = builder.getReference().getUnits().get(1);
         Team team = builder.newTeam("Team Name", "Caravanners", 500);
         builder.newUnit(name, unit);
         Assert.assertEquals(unit, builder.getCurrentUnit());
@@ -49,10 +53,10 @@ public class BuilderTests {
     @Test
     public void newUnit_clones_unit_successfully() throws TNTException{
         String name = "Unit Name";
-        Unit unit = builder.getRulebook().getUnits().get(1);
+        Unit unit = builder.getReference().getUnits().get(1);
         Team team = builder.newTeam("Team Name", "Caravanners", 500);
         builder.newUnit(name, unit);
-        Assert.assertEquals(builder.getRulebook().getUnits().get(1), builder.getCurrentUnit());
+        Assert.assertEquals(builder.getReference().getUnits().get(1), builder.getCurrentUnit());
         Assert.assertNotSame(unit.getInventory(), builder.getCurrentUnit().getInventory());
         Assert.assertNotSame(unit.getSkillList(), builder.getCurrentUnit().getSkillList());
     }
@@ -60,7 +64,7 @@ public class BuilderTests {
     @Test
     public void newUnit_added_unit_to_team_unitList() throws TNTException{
         String name = "Unit Name";
-        Unit unit = builder.getRulebook().getUnits().get(1);
+        Unit unit = builder.getReference().getUnits().get(1);
         Team team = builder.newTeam("Team Name", "Caravanners", 500);
         builder.newUnit(name, unit);
         Assert.assertEquals(1, builder.getCurrentTeam().getUnitList().size());
@@ -70,7 +74,7 @@ public class BuilderTests {
     @Test
     public void newUnit_fails_if_not_enough_money() throws TNTException{
         String name = "Unit Name";
-        Unit unit = builder.getRulebook().getUnits().get(1);
+        Unit unit = builder.getReference().getUnits().get(1);
         Team team = builder.newTeam("Team Name", "Caravanners", 30);
 
         try {
@@ -80,6 +84,52 @@ public class BuilderTests {
             
         }
 
+    }
+
+    @Test
+    public void add_unit_throws_exception_with_invalid_unit() throws TNTException{
+        Team team = builder.newTeam("Team Name", "Caravanners", 30);
+
+        Unit unit = new Unit(1, "Raiders", "Title", "Rank", "Type", 50,
+                "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
+                new ArrayList<>(), 1, 0);
+        try {
+            builder.newUnit("Bob", unit);
+            Assert.fail();
+        } catch (InvalidUnitPurchaseException e) {
+
+        }
+    }
+
+    @Test
+    public void spend_money_reduces_team_money() throws FailedMoneyTransaction, TNTException {
+        Team team = builder.newTeam("Team Name", "Caravanners", 200);
+
+        builder.spendMoney(150);
+        Assert.assertEquals(50, builder.getCurrentTeam().getMoney());
+    }
+
+    @Test
+    public void spend_money_fails_when_not_enough_money() throws TNTException{
+        Team team = builder.newTeam("Team Name", "Caravanners", 30);
+
+        try{
+            builder.spendMoney(201);
+            Assert.fail();
+        } catch (FailedMoneyTransaction e){
+
+        }
+    }
+
+    @Test
+    public void spend_money_fails_with_negative_parameter() throws TNTException{
+        Team team = builder.newTeam("Team Name", "Caravanners", 30);
+        try{
+            builder.spendMoney(-1);
+            Assert.fail();
+        } catch (FailedMoneyTransaction e){
+
+        }
     }
 
 }

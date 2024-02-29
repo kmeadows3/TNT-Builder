@@ -1,5 +1,7 @@
 package my.TNTBuilder;
 
+import my.TNTBuilder.Exceptions.FailedMoneyTransaction;
+import my.TNTBuilder.Exceptions.InvalidUnitPurchaseException;
 import my.TNTBuilder.Models.Unit;
 import my.TNTBuilder.Exceptions.DaoException;
 import my.TNTBuilder.Exceptions.TNTException;
@@ -25,18 +27,40 @@ public class Builder {
         return currentTeam;
     }
 
-    public Unit newUnit(String name, Unit unit) throws TNTException{
+    public void newUnit(String name, Unit unit) throws TNTException{
         try {
-            currentTeam.spendMoney(unit.getBaseCost());
-            currentUnit = unit.clone();
+            if (unit.getFaction().equals(currentTeam.getFaction())) {
+                spendMoney(unit.getBaseCost());
+                currentUnit = unit.clone();
+            } else {
+                throw new InvalidUnitPurchaseException("This unit cannot be added to this team.");
+            }
         } catch (CloneNotSupportedException e ){
             throw new TNTException("Cannot make a new unit", e);
         }
         currentUnit.setUnitNickname(name);
-        currentTeam.addUnit(currentUnit);
         //TODO make user fill out starting skills
-        return currentUnit;
-    };
+        currentTeam.getUnitList().add(currentUnit);
+    }
+
+    public int gainMoney(int gainedMoney) throws FailedMoneyTransaction{
+        if (gainedMoney <= 0) {
+            throw new FailedMoneyTransaction("Money gained must be positive");
+        }
+        currentTeam.setMoney(currentTeam.getMoney() + gainedMoney);
+        return currentTeam.getMoney();
+    }
+
+    public int spendMoney(int amountToSpend) throws FailedMoneyTransaction{
+        if (amountToSpend <= 0 ){
+            throw new FailedMoneyTransaction("Money lost must be positive.");
+        } else if (currentTeam.getMoney() >= amountToSpend){
+            currentTeam.setMoney(currentTeam.getMoney() - amountToSpend);
+        } else {
+            throw new FailedMoneyTransaction("You do not have enough money for that");
+        }
+        return currentTeam.getMoney();
+    }
 
 
 
@@ -45,6 +69,7 @@ public class Builder {
 
 
 
+    //getters and setters
 
     public Team getCurrentTeam() {
         return currentTeam;
@@ -62,7 +87,7 @@ public class Builder {
         this.currentUnit = currentUnit;
     }
 
-    public Reference getRulebook() {
+    public Reference getReference() {
         return reference;
     }
 }

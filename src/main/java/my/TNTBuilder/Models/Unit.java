@@ -23,6 +23,8 @@ public class Unit implements Referenceable, Cloneable{
     private int strength;
     private int spentExperience;
     private int unspentExperience;
+    private int advances = 0;
+    private int tenPointAdvances = 0;
     private List<Skillset> availableSkillsets;
     private List<Skill> skillList;
     private UnitInventory inventory;
@@ -116,6 +118,24 @@ public class Unit implements Referenceable, Cloneable{
 
 
     //Getters and Setters
+
+
+    public int getAdvances() {
+        return advances;
+    }
+
+    public void setAdvances(int advances) {
+        this.advances = advances;
+    }
+
+    public int getTenPointAdvances() {
+        return tenPointAdvances;
+    }
+
+    public void setTenPointAdvances(int tenPointAdvances) {
+        this.tenPointAdvances = tenPointAdvances;
+    }
+
     public int getId() {
         return id;
     }
