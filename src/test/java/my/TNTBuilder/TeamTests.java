@@ -3,6 +3,7 @@ import my.TNTBuilder.Exceptions.DaoException;
 import my.TNTBuilder.Exceptions.FailedPurchaseException;
 import my.TNTBuilder.Exceptions.InvalidUnitPurchaseException;
 import my.TNTBuilder.Inventory.Inventory;
+import my.TNTBuilder.Models.Skill;
 import my.TNTBuilder.Models.Unit;
 import org.junit.*;
 
@@ -31,7 +32,8 @@ public class TeamTests {
 
     @Test
     public void add_unit_adds_unit() throws InvalidUnitPurchaseException {
-        Unit unit = new Unit(1, "Caravanners", "Title", "Rank", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new int[]{1},
+        Unit unit = new Unit(1, "Caravanners", "Title", "Rank", "Type", 50,
+                "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
                 new ArrayList<>(), 1, 0);
         team.addUnit(unit);
 
@@ -41,7 +43,8 @@ public class TeamTests {
 
     @Test
     public void add_unit_throws_exception_with_invalid_unit() {
-        Unit unit = new Unit(1, "Raiders", "Title", "Rank", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new int[]{1},
+        Unit unit = new Unit(1, "Raiders", "Title", "Rank", "Type", 50,
+                "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
                 new ArrayList<>(), 1, 0);
         try {
             team.addUnit(unit);
@@ -79,9 +82,9 @@ public class TeamTests {
 
     @Test
     public void get_BS_cost_totals_correctly() throws InvalidUnitPurchaseException{
-        Unit unit1 = new Unit(1, "Caravanners", "Title", "Rank", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new int[]{1},
+        Unit unit1 = new Unit(1, "Caravanners", "Title", "Rank", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
                 new ArrayList<>(), 1, 0);
-        Unit unit2 = new Unit(2, "Caravanners", "Title", "Rank", "Type", 100, "Note", 1, 1, 1, 1, 1, 1, 1, new int[]{1},
+        Unit unit2 = new Unit(2, "Caravanners", "Title", "Rank", "Type", 100, "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
                 new ArrayList<>(), 1, 0);
         team.addUnit(unit1);
         team.addUnit(unit2);
@@ -93,7 +96,7 @@ public class TeamTests {
 
     @Test
     public void get_upkeep_totals_correctly_one_unit() throws InvalidUnitPurchaseException{
-        Unit unit1 = new Unit(1, "Caravanners", "Title", "Elite", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new int[]{1},
+        Unit unit1 = new Unit(1, "Caravanners", "Title", "Elite", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
                 new ArrayList<>(), 1, 0);
         team.addUnit(unit1);
         Assert.assertEquals(2, team.getUpkeep());
@@ -101,11 +104,11 @@ public class TeamTests {
 
     @Test
     public void get_upkeep_totals_correctly_multiple_units() throws InvalidUnitPurchaseException{
-        Unit unit1 = new Unit(1, "Caravanners", "Title", "Elite", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new int[]{1},
+        Unit unit1 = new Unit(1, "Caravanners", "Title", "Elite", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
                 new ArrayList<>(), 1, 0);
-        Unit unit2 = new Unit(2, "Caravanners", "Title", "Leader", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new int[]{1},
+        Unit unit2 = new Unit(2, "Caravanners", "Title", "Leader", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
                 new ArrayList<>(), 1, 0);
-        Unit unit3 = new Unit(3, "Caravanners", "Title", "Rank and File", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new int[]{1},
+        Unit unit3 = new Unit(3, "Caravanners", "Title", "Rank and File", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
                 new ArrayList<>(), 1, 0);
         team.addUnit(unit1);
         team.addUnit(unit2);
@@ -115,11 +118,14 @@ public class TeamTests {
 
     @Test
     public void get_upkeep_ignores_units_with_scavenger() throws InvalidUnitPurchaseException{
-        Unit unit1 = new Unit(1, "Caravanners", "Title", "Elite", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new int[]{1},
+        Unit unit1 = new Unit(1, "Caravanners", "Title", "Elite", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
                 new ArrayList<>(), 1, 0);
-        Unit unit2 = new Unit(2, "Caravanners", "Title", "Leader", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new int[]{1},
+        Unit unit2 = new Unit(2, "Caravanners", "Title", "Leader", "Type", 50, "Note", 1, 1, 1, 1, 1, 1, 1, new ArrayList<>(),
                 new ArrayList<>(), 1, 0);
-        unit2.getSkillList().add("Scavenger");
+        Skill scavenger = new Skill(1, "Scavenger", "When taking a weapon with limited ammo roll" +
+                " 2d3 when determining ammo quantity and take the higher of the two. Upkeep does not need to be paid for" +
+                " this unit. May not be taken by Freelancers.", 5);
+        unit2.getSkillList().add(scavenger);
 
         team.addUnit(unit1);
         team.addUnit(unit2);

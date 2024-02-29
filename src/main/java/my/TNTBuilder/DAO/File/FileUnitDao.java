@@ -1,7 +1,11 @@
 package my.TNTBuilder.DAO.File;
 
+import my.TNTBuilder.DAO.SkillDao;
+import my.TNTBuilder.DAO.SkillsetDao;
 import my.TNTBuilder.DAO.UnitDao;
 import my.TNTBuilder.Exceptions.DaoException;
+import my.TNTBuilder.Models.Skill;
+import my.TNTBuilder.Models.Skillset;
 import my.TNTBuilder.Models.Unit;
 
 import java.io.File;
@@ -14,6 +18,8 @@ public class FileUnitDao implements UnitDao {
     private File unitFile = new File ("Reference/testCSVs/testUnits.csv");
     private Map<Integer, Unit> units;
     private final CSVReader reader = new CSVReader();
+    private SkillDao skillDao = null;
+    private SkillsetDao skillsetDao = null;
 
 
 
@@ -47,13 +53,20 @@ public class FileUnitDao implements UnitDao {
 
 
     //Constructors
-    public FileUnitDao() throws DaoException{
+    public FileUnitDao(SkillDao skillDao, SkillsetDao skillsetDao) throws DaoException{
+        this.skillDao = skillDao;
+        this.skillsetDao = skillsetDao;
         this.units = stringArrayToMap(getFileLines(unitFile));
+
     }
 
-    public FileUnitDao(File unitFile) throws DaoException{
+    public FileUnitDao(File unitFile, SkillDao skillDao, SkillsetDao skillsetDao) throws DaoException{
         this.unitFile = unitFile;
+        this.skillDao = skillDao;
+        this.skillsetDao = skillsetDao;
         this.units = stringArrayToMap(getFileLines(unitFile));
+
+
     }
 
 
@@ -101,13 +114,15 @@ public class FileUnitDao implements UnitDao {
         int ranged = Integer.parseInt(unitParts[11]);
         int strength = Integer.parseInt(unitParts[12]);
         String purchaseNotes = unitParts[13];
-        List<String> skills = traitListStringSplitter(unitParts[14]);
+        List<String> skillsAsStrings = traitListStringSplitter(unitParts[14]);
+        List<Skill> skillList = skillDao.stringListToSkillList(skillsAsStrings);
         int startingSkills = Integer.parseInt(unitParts[15]);
         int[] availableSkillsets = skillsetSplitter(unitParts[16]);
+        List<Skillset> skillsetList = skillsetDao.skillsetsFromSkillsetIdArray(availableSkillsets);
         int startingExp = convertStartingExp(rank);
 
         return new Unit(id, faction, title, rank, type, baseCost, purchaseNotes, wounds, defense, mettle, move, ranged,
-                melee, strength, availableSkillsets, skills, startingSkills, startingExp);
+                melee, strength, skillsetList, skillList, startingSkills, startingExp);
     }
 
 

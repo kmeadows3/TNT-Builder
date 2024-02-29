@@ -23,8 +23,7 @@ public class ApplicationCLI {
             try {
                 String selection = menu.mainMenu();
                 if (selection.equals("1")) {
-                    createTeam();
-                    editTeamMenu();
+                     createTeam();
                 } else if (selection.equals("2")) {
                     throw new TNTException("This functionality is not implemented");
                 } else if (selection.equals("3")) {
@@ -50,7 +49,7 @@ public class ApplicationCLI {
                 if (userSelection.equals("1")){
                     throw new TNTException("This functionality is not implemented");
                 } else if (userSelection.equals("2")){
-                    createUnit();
+                        createUnit();
                 } else if (userSelection.equals("3")){
                     throw new TNTException("This functionality is not implemented");
                 } else if (userSelection.equals("4")){
@@ -66,11 +65,12 @@ public class ApplicationCLI {
     }
 
 
-    private void createTeam(){
+    private void createTeam() throws TNTException{
         try {
             TeamInputHelper teamData = menu.initializeNewTeam(builder.getRulebook().getTeamOptions());
             builder.newTeam(teamData.getName(), teamData.getFaction(), teamData.getMoney());
-        } catch (TNTException e){
+            editTeamMenu();
+        } catch (TNTException e) {
             menu.printErrorMessage(e);
         }
     }
@@ -81,6 +81,7 @@ public class ApplicationCLI {
             NewUnitInputHelper userInput = menu.getNewUnitInformationFromUser(builder.getRulebook().getUnitOptions(
                     faction));
             builder.newUnit(userInput.getName(), userInput.getUnit());
+            menu.displayUnit(builder.getCurrentUnit());
         }  catch (NumberFormatException e) {
             TNTException ex = new TNTException("Please enter a valid number", e);
             menu.printErrorMessage(ex);

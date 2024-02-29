@@ -2,10 +2,7 @@ package my.TNTBuilder.Models;
 
 import my.TNTBuilder.Inventory.UnitInventory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Unit implements Referenceable, Cloneable{
     private int id;
@@ -26,8 +23,8 @@ public class Unit implements Referenceable, Cloneable{
     private int strength;
     private int spentExperience;
     private int unspentExperience;
-    private int[] availableSkillsets;
-    private List<String> skillList;
+    private List<Skillset> availableSkillsets;
+    private List<Skill> skillList;
     private UnitInventory inventory;
 
 
@@ -35,7 +32,7 @@ public class Unit implements Referenceable, Cloneable{
 
     public Unit(int id, String faction, String title, String rank, String type, int baseCost, String newPurchaseNote,
                 int wounds, int defense, int mettle, int move, int ranged, int melee, int strength,
-                int[] availableSkillsets, List<String> skillList, int additionalStartingSkills, int spentExperience) {
+                List<Skillset> availableSkillsets, List<Skill> skillList, int additionalStartingSkills, int spentExperience) {
         this.id = id;
         this.faction = faction;
         this.title = title;
@@ -66,9 +63,7 @@ public class Unit implements Referenceable, Cloneable{
     public Unit clone() throws CloneNotSupportedException {
         Unit clonedUnit = (Unit)super.clone();
         clonedUnit.inventory = new UnitInventory();
-        List<String> newSkillList = new ArrayList<>();
-        newSkillList.addAll(skillList);
-        clonedUnit.skillList = newSkillList;
+        clonedUnit.skillList = new ArrayList<>(skillList);
         return clonedUnit;
 
     }
@@ -78,6 +73,46 @@ public class Unit implements Referenceable, Cloneable{
         //TODO calculate this after inventory is implemented
         return bsCost;
     }
+
+    public int getUnitUpkeep() {
+        int upkeep = 0;
+
+        List<String> skillNames = new ArrayList<>();
+        for (Skill skill : skillList){
+            skillNames.add(skill.getName());
+        }
+        boolean isScavenger = skillNames.contains("Scavenger");
+
+        if (isScavenger) {
+            upkeep += 0;
+        } else if (rank.equals("Leader")) {
+            upkeep += 3;
+        } else if (rank.equals("Elite") || rank.equals("Specialist")){
+            upkeep += 2;
+        } else if (rank.equals("Rank and File")) {
+            upkeep += 1;
+        }
+        // TODO: Deal with relics in inventory
+        return upkeep;
+    }
+
+    public int costToAdvance(){
+        int totalExp = spentExperience + unspentExperience;
+        if (totalExp <= 20) {
+            return 5;
+        } else if (totalExp <= 45 ) {
+            return 6;
+        } else if (totalExp <= 74) {
+            return 7;
+        }
+        return 8;
+    }
+
+
+
+
+
+
 
 
     //Getters and Setters
@@ -162,11 +197,11 @@ public class Unit implements Referenceable, Cloneable{
         this.unspentExperience = unspentExperience;
     }
 
-    public void setAvailableSkillsets(int[] availableSkillsets) {
+    public void setAvailableSkillsets(List<Skillset> availableSkillsets) {
         this.availableSkillsets = availableSkillsets;
     }
 
-    public void setSkillList(List<String> skillList) {
+    public void setSkillList(List<Skill> skillList) {
         this.skillList = skillList;
     }
 
@@ -236,11 +271,11 @@ public class Unit implements Referenceable, Cloneable{
         return unspentExperience;
     }
 
-    public int[] getAvailableSkillsets() {
+    public List<Skillset> getAvailableSkillsets() {
         return availableSkillsets;
     }
 
-    public List<String> getSkillList() {
+    public List<Skill> getSkillList() {
         return skillList;
     }
 
@@ -264,13 +299,7 @@ public class Unit implements Referenceable, Cloneable{
                 && Objects.equals(title, unit.title) && Objects.equals(faction, unit.faction)
                 && Objects.equals(rank, unit.rank)
                 && Objects.equals(type, unit.type) && Objects.equals(newPurchaseNote, unit.newPurchaseNote)
-                && Arrays.equals(availableSkillsets, unit.availableSkillsets);
+                && new HashSet<>(unit.getAvailableSkillsets()).containsAll(availableSkillsets);
     }
 
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(id, unitNickname, title, faction, rank, type, baseCost, newPurchaseNote, additionalStartingSkills, wounds, defense, mettle, move, ranged, melee, strength, spentExperience, unspentExperience, skillList, inventory);
-        result = 31 * result + Arrays.hashCode(availableSkillsets);
-        return result;
-    }
 }

@@ -24,9 +24,13 @@ public class FileSkillsetDao implements SkillsetDao {
         this.skillsetFile = skillsetFile;
         this.skillsets = stringArrayToMap(getFileLines(skillsetFile));
     }
-
-
-
+    public List<Skillset> skillsetsFromSkillsetIdArray (int[]skillsetsAsArray){
+        List<Skillset> skillsetList = new ArrayList<>();
+        for (int skillsetId : skillsetsAsArray){
+            skillsetList.add(skillsets.get(skillsetId));
+        }
+        return skillsetList;
+    }
 
 
 
