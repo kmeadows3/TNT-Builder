@@ -17,7 +17,7 @@ public class Reference {
     private final ItemTraitDao itemTraitDao = new FileItemTraitDao();
     private final SkillDao skillDao = new FileSkillDao();
     private final SkillsetDao skillsetDao = new FileSkillsetDao();
-    private final FileUnitDao unitDao = new FileUnitDao();
+    private final FileUnitDao unitDao = new FileUnitDao(skillDao, skillsetDao);
 
 
     public Reference() throws DaoException{
@@ -34,6 +34,9 @@ public class Reference {
         return unitDao.getUnitOptions(faction);
     }
 
+    public List<Skill> stringListToSkillList (List<String> stringList){
+        return skillDao.stringListToSkillList(stringList);
+    }
 
     //Getters
 

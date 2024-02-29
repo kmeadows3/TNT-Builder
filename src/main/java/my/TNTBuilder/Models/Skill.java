@@ -1,5 +1,8 @@
 package my.TNTBuilder.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Skill extends UnitTrait{
@@ -13,6 +16,17 @@ public class Skill extends UnitTrait{
 
     public Skill() {
     }
+
+
+
+
+
+
+
+
+
+
+
 
     public int getSkillset() { return skillset; }
 

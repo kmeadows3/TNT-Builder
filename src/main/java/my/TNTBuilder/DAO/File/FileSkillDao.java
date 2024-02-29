@@ -26,6 +26,21 @@ public class FileSkillDao implements SkillDao {
     }
 
 
+    //METHOD
+    public List<Skill> stringListToSkillList (List<String> stringList){
+        List<Skill> skillList= new ArrayList<>();
+        for (String skillName : stringList){
+            for(Map.Entry<Integer, Skill> entry : skills.entrySet()){
+                if  (skillName.equalsIgnoreCase(entry.getValue().getName())){
+                    skillList.add(entry.getValue());
+                    break;
+                }
+            }
+        }
+        return skillList;
+    }
+
+
 
     //Methods
 

@@ -70,7 +70,7 @@ public class BuilderTests {
     @Test
     public void newUnit_fails_if_not_enough_money() throws TNTException{
         String name = "Unit Name";
-        Unit unit = (Unit) builder.getRulebook().getUnits().get(1);
+        Unit unit = builder.getRulebook().getUnits().get(1);
         Team team = builder.newTeam("Team Name", "Caravanners", 30);
 
         try {
