@@ -132,4 +132,29 @@ public class BuilderTests {
         }
     }
 
+    @Test
+    public void gain_money_adds_correct_amount() throws TNTException{
+        Team team = builder.newTeam("Team Name", "Caravanners", 30);
+        builder.gainMoney(50);
+        Assert.assertEquals(80, builder.getCurrentTeam().getMoney());
+    }
+
+    @Test
+    public void gain_money_adds_correct_amount_multiple_calls() throws TNTException{
+        Team team = builder.newTeam("Team Name", "Caravanners", 30);
+        builder.gainMoney(50);
+        builder.gainMoney(50);
+        Assert.assertEquals(130, builder.getCurrentTeam().getMoney());
+    }
+
+    @Test
+    public void gain_money_fails_with_negative_values() throws TNTException{
+        Team team = builder.newTeam("Team Name", "Caravanners", 30);
+        try {
+            builder.gainMoney(-50);
+            Assert.fail();
+        } catch (FailedMoneyTransaction e) {
+
+        }
+    }
 }

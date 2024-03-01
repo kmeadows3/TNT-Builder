@@ -24,31 +24,6 @@ public class FileUnitDao implements UnitDao {
 
 
 
-    //Methods
-    public List<String> getTeamOptions(){
-        List<String> teamList = new ArrayList<>();
-        for(Map.Entry<Integer, Unit> entry : units.entrySet()){
-            Unit unit = entry.getValue();
-            String faction = unit.getFaction();
-            if (!teamList.contains(faction)){
-                teamList.add(faction);
-            }
-        }
-        return teamList;
-    }
-
-    public List<Unit> getUnitOptions(String faction){
-        List<Unit> unitOptions = new ArrayList<>();
-        for (Map.Entry<Integer, Unit> entry : units.entrySet()){
-            Unit unit = entry.getValue();
-            if (unit.getFaction().equals(faction)){
-                unitOptions.add(unit);
-            }
-        }
-        return unitOptions;
-    }
-
-
 
 
 

@@ -1,5 +1,7 @@
 package my.TNTBuilder;
 
+import my.TNTBuilder.DAO.MemoryReferenceDao;
+import my.TNTBuilder.DAO.ReferenceDao;
 import my.TNTBuilder.Exceptions.FailedMoneyTransaction;
 import my.TNTBuilder.Exceptions.InvalidUnitPurchaseException;
 import my.TNTBuilder.Models.Unit;
@@ -9,10 +11,10 @@ import my.TNTBuilder.Exceptions.TNTException;
 public class Builder {
     private Team currentTeam;
     private Unit currentUnit;
-    private Reference reference;
+    private ReferenceDao reference;
 
     public Builder() throws DaoException{
-        reference = new Reference();
+        reference = new MemoryReferenceDao();
     }
 
     public Team newTeam(String name, String faction, int money) throws TNTException{
@@ -87,7 +89,7 @@ public class Builder {
         this.currentUnit = currentUnit;
     }
 
-    public Reference getReference() {
+    public ReferenceDao getReference() {
         return reference;
     }
 }

@@ -9,7 +9,4 @@ import java.util.Map;
 public interface UnitDao {
     public Map<Integer, Unit> getUnits();
 
-    public List<String> getTeamOptions();
-
-    public List<Unit> getUnitOptions(String faction);
 }

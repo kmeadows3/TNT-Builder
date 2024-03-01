@@ -1,4 +1,4 @@
-package my.TNTBuilder;
+package my.TNTBuilder.DAO;
 
 import my.TNTBuilder.DAO.*;
 import my.TNTBuilder.DAO.File.*;
@@ -6,11 +6,12 @@ import my.TNTBuilder.Models.*;
 
 import my.TNTBuilder.Exceptions.DaoException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Reference {
-    //Variables to hold the various DAO
+public class MemoryReferenceDao implements ReferenceDao{
+    //Variables to hold the various FileDAO
     private final ArmorDao armorDao = new FileArmorDao();
     private final EquipmentDao equipmentDao = new FileEquipmentDao();
     private final WeaponDao weaponDao = new FileWeaponDao();
@@ -20,23 +21,38 @@ public class Reference {
     private final FileUnitDao unitDao = new FileUnitDao(skillDao, skillsetDao);
 
 
-    public Reference() throws DaoException{
+    public MemoryReferenceDao() throws DaoException{
     }
 
 
 
     //Methods
     public List<String> getTeamOptions(){
-        return unitDao.getTeamOptions();
+        List<String> teamList = new ArrayList<>();
+        Map<Integer, Unit> units = unitDao.getUnits();
+        for(Map.Entry<Integer, Unit> entry : units.entrySet()){
+            Unit unit = entry.getValue();
+            String faction = unit.getFaction();
+            if (!teamList.contains(faction)){
+                teamList.add(faction);
+            }
+        }
+        return teamList;
     }
 
     public List<Unit> getUnitOptions(String faction){
-        return unitDao.getUnitOptions(faction);
+        Map<Integer, Unit> units = unitDao.getUnits();
+        List<Unit> unitOptions = new ArrayList<>();
+        for (Map.Entry<Integer, Unit> entry : units.entrySet()){
+            Unit unit = entry.getValue();
+            if (unit.getFaction().equals(faction)){
+                unitOptions.add(unit);
+            }
+        }
+        return unitOptions;
     }
 
-    public List<Skill> stringListToSkillList (List<String> stringList){
-        return skillDao.stringListToSkillList(stringList);
-    }
+
 
     //Getters
 
