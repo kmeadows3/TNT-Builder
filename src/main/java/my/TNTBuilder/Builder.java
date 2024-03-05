@@ -45,15 +45,19 @@ public class Builder {
         currentTeam.getUnitList().add(currentUnit);
     }
 
-    public int gainMoney(int gainedMoney) throws FailedMoneyTransaction{
+    public int[] gainMoney(int gainedMoney) throws FailedMoneyTransaction{
+        int[] startingEndingFunds = new int[]{currentTeam.getMoney(), 0};
+
         if (gainedMoney <= 0) {
             throw new FailedMoneyTransaction("Money gained must be positive");
         }
         currentTeam.setMoney(currentTeam.getMoney() + gainedMoney);
-        return currentTeam.getMoney();
+        startingEndingFunds[1] = currentTeam.getMoney();
+        return startingEndingFunds;
     }
 
-    public int spendMoney(int amountToSpend) throws FailedMoneyTransaction{
+    public int[] spendMoney(int amountToSpend) throws FailedMoneyTransaction{
+        int[] startingEndingFunds = new int[]{currentTeam.getMoney(), 0};
         if (amountToSpend <= 0 ){
             throw new FailedMoneyTransaction("Money lost must be positive.");
         } else if (currentTeam.getMoney() >= amountToSpend){
@@ -61,7 +65,8 @@ public class Builder {
         } else {
             throw new FailedMoneyTransaction("You do not have enough money for that");
         }
-        return currentTeam.getMoney();
+        startingEndingFunds[1] = currentTeam.getMoney();
+        return startingEndingFunds;
     }
 
 

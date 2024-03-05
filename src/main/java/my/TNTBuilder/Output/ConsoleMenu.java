@@ -123,6 +123,13 @@ public class ConsoleMenu {
         System.out.println();
     }
 
+    public String manageExpMenu(){
+        System.out.println("(1) Gain Experience");
+        System.out.println("(2) Gain Advance");
+
+        return getUserSelection();
+    }
+
     public String getMoneyGained() {
         System.out.print("Enter money to add: ");
         return console.nextLine();
