@@ -101,14 +101,11 @@ public class ApplicationCLI {
         if (builder.getCurrentTeam().getUnitList().isEmpty()){
             throw new TNTException("This team has no units to edit");
         }
-        String userSelection = menu.selectUnitToEdit();
+        int unitIndex = menu.promptForInt("Select unit number to edit: ") - 1;
         try {
-            int index = Integer.parseInt(userSelection) - 1;
-            builder.setCurrentUnit(builder.getCurrentTeam().getUnitList().get(index));
+            builder.setCurrentUnit(builder.getCurrentTeam().getUnitList().get(unitIndex));
         } catch (IndexOutOfBoundsException e) {
             throw new TNTException("Please select a valid unit number", e);
-        } catch (NumberFormatException e) {
-            throw new TNTException("Please enter selection as a number");
         }
         editUnitMenu();
     }
@@ -180,7 +177,7 @@ public class ApplicationCLI {
                 if (userSelection.equals("1")) {
                     renameUnit();
                 } else if (userSelection.equals("2")) {
-                    throw new TNTException("This functionality is not implemented");
+                    manageExp();
                 } else if (userSelection.equals("3")) {
                     throw new TNTException("This functionality is not implemented");
                 } else if (userSelection.equals("4")) {
@@ -206,8 +203,53 @@ public class ApplicationCLI {
         builder.getCurrentUnit().setUnitNickname(newName);
     }
 
+    public void manageExp(){
+        while (true) {
+            try {
+                String userSelection = menu.manageExperienceMenu();
+                if (userSelection.equals("1")) {
+                    gainExp();
+                } else if (userSelection.equals("2")) {
+                    spendExp();
+                } else if (userSelection.equals("3")) {
+                    return;
+                } else {
+                    throw new TNTException("Please enter a valid selection");
+                }
+            } catch (TNTException e) {
+                menu.printErrorMessage(e);
+            }
+        }
+    }
 
+    private void gainExp() throws TNTException {
+        int gainedExp = menu.promptForInt("Enter amount of experience gained: ");
+        int newExpTotal = builder.gainExp(gainedExp);
+        menu.printMessage("Unit has gained " + gainedExp + " experience. Current unspent experience is: " + newExpTotal);
+    }
 
+    private void spendExp() throws TNTException{
+        if (builder.getCurrentUnit().getUnspentExperience() < builder.getCurrentUnit().costToAdvance()){
+            throw new TNTException("You do not have enough experience to advance.");
+        }
+        while (true) {
+            try {
+                String userSelection = menu.gainAdvanceOptions();
+                if (userSelection.equals("1")) {
+                    throw new TNTException("This functionality is not implemented");
+                } else if (userSelection.equals("2")) {
+                    //TODO start here, easier to do set methods than roll random ones
+                    throw new TNTException("This functionality is not implemented");
+                } else if (userSelection.equals("3")) {
+                    return;
+                } else {
+                    throw new TNTException("Please enter a valid selection");
+                }
+            } catch (TNTException e) {
+                menu.printErrorMessage(e);
+            }
+        }
+    }
 
 
     public ApplicationCLI(){

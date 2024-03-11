@@ -54,31 +54,60 @@ public class ConsoleMenu {
         return getUserSelection();
     }
 
+    public String manageExperienceMenu(){
+        System.out.println();
+
+        System.out.println("(1) Gain Experience");
+        System.out.println("(2) Spend Experience to Gain Advance");
+        System.out.println("(3) Finish Managing Experience");
+        return getUserSelection();
+    }
+
+    public String gainAdvanceOptions(){
+        System.out.println();
+
+        System.out.println("(1) Roll New Advance");
+        System.out.println("(2) Enter Rolled Advance");
+        System.out.println("(3) Abort purchase");
+        return getUserSelection();
+    }
+
     private String getUserSelection(){
         System.out.println();
-        System.out.print("Make Selection: ");
+        return promptForString("Make Selection: ");
+    }
 
+    private String promptForString(String prompt) {
+        System.out.print(prompt);
         return console.nextLine();
     }
 
+    public int promptForInt(String prompt) throws TNTException {
+        System.out.print(prompt);
+        int userInput = 0;
+        try {
+            userInput = Integer.parseInt(console.nextLine());
+        } catch (NumberFormatException e){
+            throw new TNTException("Response must be an integer.", e);
+        }
+        return userInput;
+    }
+
+    public void printMessage(String message){
+        System.out.println(message);
+    }
 
     public TeamInputHelper initializeNewTeam(List<String> teamOptions) throws TNTException{
         int money = getStartingMoney();
         String faction = getFaction(teamOptions);
-        System.out.print("Name your warband: ");
-        String name = console.nextLine();
+        String name = promptForString("Name your warband: ");
         return new TeamInputHelper(name, faction, money);
     }
 
+
     private int getStartingMoney() throws TNTException {
         System.out.println();
-        System.out.print("Starting Barter Scrip: ");
-        int money = 0;
-        try {
-            money = Integer.parseInt(console.nextLine());
-        } catch (NumberFormatException e){
-            throw new TNTException("Enter money as an integer.", e);
-        }
+        int money = promptForInt("Starting Barter Scrip: ");
         System.out.println();
         return money;
     }
@@ -89,8 +118,8 @@ public class ConsoleMenu {
             System.out.println("("+ (i + 1) + ") " + teamOptions.get(i));
         }
         System.out.println();
-        System.out.print("Please select your faction: ");
         String faction = null;
+        System.out.print("Please select your faction: ");
         try {
             int teamNumber = Integer.parseInt(console.nextLine());
             faction = teamOptions.get(teamNumber - 1);

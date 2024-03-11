@@ -68,8 +68,14 @@ public class Builder {
         startingEndingFunds[1] = currentTeam.getMoney();
         return startingEndingFunds;
     }
-
-
+    public int gainExp(int addedExp) throws TNTException{
+        if (addedExp <= 0 ){
+            throw new TNTException("You must gain a positive amount of experience");
+        }
+        int newExpTotal = currentUnit.getUnspentExperience() + addedExp;
+        currentUnit.setUnspentExperience(newExpTotal);
+        return currentUnit.getUnspentExperience();
+    }
 
 
 
