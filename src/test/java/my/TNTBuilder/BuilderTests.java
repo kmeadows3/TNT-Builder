@@ -157,4 +157,72 @@ public class BuilderTests {
 
         }
     }
+
+    @Test
+    public void gain_experience_adds_to_unused_experience() throws TNTException{
+        String name = "Unit Name";
+        Unit unit = builder.getReference().getUnits().get(1);
+        Team team = builder.newTeam("Team Name", "Caravanners", 500);
+        builder.newUnit(name, unit);
+        builder.gainExp(10);
+        Assert.assertEquals(10, builder.getCurrentUnit().getUnspentExperience());
+    }
+
+
+    @Test
+    public void gain_experience_will_not_add_negative_experience() throws TNTException{
+        String name = "Unit Name";
+        Unit unit = builder.getReference().getUnits().get(1);
+        Team team = builder.newTeam("Team Name", "Caravanners", 500);
+        builder.newUnit(name, unit);
+        try {
+            builder.gainExp(-10);
+            Assert.fail();
+        } catch (TNTException e){
+            Assert.assertEquals(0, builder.getCurrentUnit().getUnspentExperience());
+        }
+    }
+
+
+    @Test
+    public void spend_experience_subtracts_from_unused_experience() throws TNTException {
+        String name = "Unit Name";
+        Unit unit = builder.getReference().getUnits().get(1);
+        Team team = builder.newTeam("Team Name", "Caravanners", 500);
+        builder.newUnit(name, unit);
+        builder.getCurrentUnit().setUnspentExperience(50);
+        builder.spendExp(10);
+        Assert.assertEquals(40, builder.getCurrentUnit().getUnspentExperience());
+    }
+
+    @Test
+    public void spend_experience_fails_with_negative_exp() throws TNTException {
+        String name = "Unit Name";
+        Unit unit = builder.getReference().getUnits().get(1);
+        Team team = builder.newTeam("Team Name", "Caravanners", 500);
+        builder.newUnit(name, unit);
+        builder.getCurrentUnit().setUnspentExperience(50);
+        try {
+            builder.spendExp(-10);
+            Assert.fail();
+        } catch (TNTException e){
+            Assert.assertEquals(50, builder.getCurrentUnit().getUnspentExperience());
+        }
+    }
+
+    @Test
+    public void spend_experience_fails_when_not_enough_exp() throws TNTException {
+        String name = "Unit Name";
+        Unit unit = builder.getReference().getUnits().get(1);
+        Team team = builder.newTeam("Team Name", "Caravanners", 500);
+        builder.newUnit(name, unit);
+        builder.getCurrentUnit().setUnspentExperience(10);
+        try {
+            builder.spendExp(20);
+            Assert.fail();
+        } catch (TNTException e){
+            Assert.assertEquals(10, builder.getCurrentUnit().getUnspentExperience());
+        }
+    }
+
 }
