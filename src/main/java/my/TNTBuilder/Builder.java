@@ -7,6 +7,9 @@ import my.TNTBuilder.Exceptions.InvalidUnitPurchaseException;
 import my.TNTBuilder.Models.Unit;
 import my.TNTBuilder.Exceptions.DaoException;
 import my.TNTBuilder.Exceptions.TNTException;
+import my.TNTBuilder.Models.UnitTrait;
+
+import java.util.List;
 
 public class Builder {
     private Team currentTeam;
@@ -89,6 +92,10 @@ public class Builder {
         currentUnit.setUnspentExperience(newExpTotal);
         return currentUnit.getUnspentExperience();
     }
+
+//    public List<UnitTrait> getAvailableTraits() {
+//        reference.getSkillsets();
+//    }
 
 
 
